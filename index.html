@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thaumcraft 4 Research Solver</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./src/styles/grid.css">
+    <link rel="stylesheet" href="./src/styles/main.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Left Sidebar: Aspect Library -->
+      <aside class="sidebar left-sidebar">
+        <h2>Aspect Library</h2>
+        
+        <div class="controls">
+          <button id="btn-research" class="primary-btn">Research!</button>
+          
+          <div class="setting-group">
+            <label for="grid-size">Grid Size:</label>
+            <select id="grid-size">
+              <option value="2">Small (3)</option>
+              <option value="3" selected>Standard (4)</option>
+              <option value="4">Large (5)</option>
+              <option value="5">Extra Large (6)</option>
+            </select>
+          </div>
+
+          <div class="setting-group mod-toggles">
+            <div class="mod-column">
+                <label><input type="checkbox" id="mod-gregtech"> GregTech</label>
+                <label><input type="checkbox" id="mod-gt_plus_plus"> GT++</label>
+            </div>
+            <div class="mod-column">
+                <label><input type="checkbox" id="mod-magicbees"> MagicBees</label>
+                <label><input type="checkbox" id="mod-forbiddenmagic"> Forbidden Magic</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-container" style="padding-bottom: 10px; border-bottom: 1px solid var(--panel-border); margin-bottom: 10px;">
+            <input type="text" id="aspect-search" placeholder="Search aspects..." style="width: 100%; padding: 8px;" />
+        </div>
+
+        <div class="aspect-list-container" id="aspect-list">
+          <!-- Aspects injected by JS -->
+        </div>
+
+        <div class="custom-aspect-creator">
+          <h3>Add Custom Aspect</h3>
+          <form id="form-add-aspect">
+            <input type="text" id="custom-aspect-name" placeholder="Name" required />
+            <select id="custom-aspect-parent1" required>
+              <option value="" disabled selected hidden>Parent 1</option>
+            </select>
+            <select id="custom-aspect-parent2" required>
+              <option value="" disabled selected hidden>Parent 2</option>
+            </select>
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      </aside>
+
+      <!-- Center Main Content: Grid -->
+      <main class="main-content">
+        <div class="grid-container" id="grid-container">
+          <!-- Hexagons injected by JS -->
+        </div>
+      </main>
+
+      <!-- Right Sidebar: How to Use -->
+      <aside class="sidebar right-sidebar">
+        <h2>How to Use</h2>
+        <div class="instructions">
+          <p><strong>1. Place Aspects:</strong> Drag aspects from the left library and drop them onto the empty hexes to set your starting endpoints.</p>
+          <p><strong>2. Add/Remove Gaps:</strong> Right-click an empty active hex to turn it into an inactive void (gap). Right-click again to restore it.</p>
+          <p><strong>3. Use More:</strong> Check "Use More" under an aspect to make the algorithm prefer using it.</p>
+          <p><strong>4. Solve:</strong> Click "Research!" to automatically find the shortest parent-child path connecting your placed aspects.</p>
+          <p><strong>5. Edit Formulas:</strong> Click the ⚙️ icon next to a compound aspect to edit its parents.</p>
+        </div>
+      </aside>
+    </div>
+    
+    <!-- Modal for editing formulas -->
+    <div id="edit-formula-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h3>Edit <span id="edit-formula-aspect-name"></span></h3>
+        <div class="setting-group" style="margin: 15px 0;">
+            <select id="edit-formula-parent1"></select>
+            <select id="edit-formula-parent2"></select>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button id="cancel-formula-btn" style="padding: 5px 10px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">Cancel</button>
+            <button id="save-formula-btn" style="padding: 5px 10px; background: var(--primary-color); color: white; border: none; cursor: pointer;">Save</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Custom Tooltip -->
+    <div id="aspect-tooltip" class="aspect-tooltip" style="display: none;"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

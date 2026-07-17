@@ -1,0 +1,346 @@
+:root {
+  --bg-color: #121216;
+  --panel-bg: rgba(25, 25, 30, 0.7);
+  --panel-border: rgba(255, 255, 255, 0.1);
+  --text-main: #e0e0e0;
+  --text-muted: #888;
+  --primary-color: #9d4edd;
+  --primary-hover: #c77dff;
+  --hex-active: rgba(255, 255, 255, 0.1);
+  --hex-hover: rgba(255, 255, 255, 0.2);
+  --hex-inactive: rgba(0, 0, 0, 0.3);
+  --hex-border: rgba(157, 78, 221, 0.4);
+  --hex-path: rgba(157, 78, 221, 0.8);
+  
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-color);
+  background-image: radial-gradient(circle at 50% 0%, #2a1b38 0%, #121216 60%);
+  color: var(--text-main);
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  z-index: 10;
+}
+
+.left-sidebar {
+  border-right: 1px solid var(--panel-border);
+}
+
+.right-sidebar {
+  border-left: 1px solid var(--panel-border);
+  width: 300px;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.instructions p {
+  background: rgba(0,0,0,0.2);
+  padding: 0.75rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-hover);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.setting-group.mod-toggles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.85rem;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.mod-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mod-toggles label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.primary-btn:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 0 15px var(--primary-hover);
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.setting-group label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+select, input[type="text"] {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: var(--font-family);
+}
+
+option {
+  background: var(--bg-color);
+  color: var(--text-main);
+}
+
+
+
+/* Aspect List */
+.aspect-list-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.aspect-list-container::-webkit-scrollbar {
+  width: 12px;
+}
+.aspect-list-container::-webkit-scrollbar-thumb {
+  background: var(--panel-border);
+  border-radius: 3px;
+  min-height: 40px;
+}
+
+.color-mask {
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    display: inline-block;
+}
+
+.aspect-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.aspect-item:hover {
+  border-color: var(--primary-color);
+}
+
+.aspect-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aspect-title {
+  font-weight: 600;
+  color: #fff;
+  flex-grow: 1;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.aspect-draggable {
+  cursor: grab;
+}
+
+.aspect-draggable:active {
+  cursor: grabbing;
+}
+
+.aspect-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.edit-formula-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  font-size: 1rem;
+}
+
+.edit-formula-btn:hover {
+  opacity: 1;
+}
+
+
+
+.aspect-actions {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.aspect-actions label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+/* Custom Aspect Form */
+.custom-aspect-creator {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--panel-border);
+}
+
+.custom-aspect-creator h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+#form-add-aspect {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#form-add-aspect button {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border: 1px solid var(--panel-border);
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#form-add-aspect button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-color);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color);
+  width: 300px;
+}
+
+.aspect-tooltip {
+    position: fixed;
+    background: var(--panel-bg);
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.aspect-tier-primal { color: #ffd700; }
+.aspect-tier-compound { color: #a0a0a0; }
+ 

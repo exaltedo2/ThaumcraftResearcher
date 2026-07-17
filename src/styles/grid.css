@@ -1,0 +1,101 @@
+.grid-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Allow dragging */
+  user-select: none;
+}
+
+.grid-board {
+  position: relative;
+  /* width/height will be set dynamically */
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+}
+
+.hex {
+  position: absolute;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.hex-inner {
+  width: 90%;
+  height: 90%;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  background: var(--hex-active);
+}
+
+.hex.state-active_empty .hex-inner {
+  background: var(--hex-active);
+}
+
+.hex.state-active_empty:hover .hex-inner {
+  background: var(--hex-hover);
+}
+
+.hex.state-inactive .hex-inner {
+  background: transparent;
+}
+
+.hex.state-has_aspect .hex-inner {
+  background: rgba(157, 78, 221, 0.3); /* slightly brighter instead of border */
+}
+
+/* The actual aspect content */
+.hex-aspect-label {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hex-aspect-icon {
+  width: 52px;
+  height: 52px;
+  position: absolute;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,1));
+  opacity: 0.85; /* slight transparency so text pops more */
+}
+
+.hex-aspect-name {
+  position: absolute;
+  z-index: 1;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 4px #000, 0 0 4px #000, 0 0 6px #000, 1px 1px 2px #000, -1px -1px 2px #000;
+  text-align: center;
+}
+
+/* Drag over effect */
+.hex.drag-over .hex-inner {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+/* Path highlighting */
+.hex.is-path .hex-inner {
+  background: var(--hex-path);
+  box-shadow: inset 0 0 15px #fff;
+}
+
+.hex.is-path .hex-aspect-label {
+  color: #fff;
+}
