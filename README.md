@@ -33,3 +33,8 @@ npm run dev
 
 ## Credits
 HQ Aspect image masks are adapted from `universal_tc_research_solver`.
+
+## Contact & Feedback
+If you have any suggestions, feature requests, or just want to reach out, feel free to contact me:
+- **Discord:** `exaltedo2`
+- **Email:** [exalt_business@hotmail.com](mailto:exalt_business@hotmail.com)
