@@ -94,19 +94,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 8. Solver Integration
-    const btnResearch = document.getElementById('btn-research');
-    btnResearch.addEventListener('click', () => {
+    const runSolver = () => {
         // Clear paths visually and from the model BEFORE solving
         gridRenderer.clearPaths();
 
         const graph = new AspectGraph(db);
         const solver = new Solver(grid, graph);
-        
+
         const paths = solver.solve();
         if (paths && paths.length > 0) {
             gridRenderer.drawPaths(paths);
         } else {
             alert("No valid path could be found to connect all endpoints with the currently enabled aspects!");
         }
-    });
+    };
+
+    document.getElementById('btn-research').addEventListener('click', runSolver);
+    document.getElementById('btn-research-2').addEventListener('click', runSolver);
 });
