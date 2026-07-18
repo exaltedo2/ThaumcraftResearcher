@@ -14,6 +14,12 @@ export class AspectListUI {
         this.render();
     }
 
+    clearSelection() {
+        if (this.selectedAspectId === null) return;
+        this.selectedAspectId = null;
+        this.render();
+    }
+
     setupModal() {
         const modal = document.getElementById('edit-formula-modal');
         const cancelBtn = document.getElementById('cancel-formula-btn');

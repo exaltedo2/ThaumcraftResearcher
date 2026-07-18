@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let grid = new HexGrid(currentRadius);
     let gridRenderer = new GridRenderer(grid, 'grid-container', db);
 
+    // Tapping anywhere that isn't an aspect (to select) or a hex (to place)
+    // cancels the pending placement, so a stray tap can't drop an aspect later.
+    document.addEventListener('click', (e) => {
+        if (!gridRenderer.selectedAspectId) return;
+        if (e.target.closest('.aspect-item') || e.target.closest('.hex')) return;
+        gridRenderer.selectedAspectId = null;
+        aspectListUI.clearSelection();
+    });
+
     // 5. Grid Size Selector
     const gridSizeSelect = document.getElementById('grid-size');
     gridSizeSelect.value = currentRadius;
