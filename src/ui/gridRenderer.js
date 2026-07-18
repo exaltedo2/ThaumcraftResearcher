@@ -66,10 +66,80 @@ export class GridRenderer {
 
         this.container.appendChild(board);
 
+        // Remember the hex dimensions/offset so hexCenter() and renderConnections()
+        // can reuse the exact same coordinate math used to position the hexes above.
+        this.hexWidth = width;
+        this.hexHeight = height;
+        this.boardOffset = { minX, minY };
+
         // Natural (unscaled) footprint of the whole hex cluster, used to
         // shrink the board to fit small viewports instead of overflowing them.
         this.boardExtent = { width: maxX - minX, height: maxY - minY };
         this.applyScale();
+        this.renderConnections();
+    }
+
+    // Pixel center of a hex, in the same coordinate space used to position
+    // the hex elements themselves (origin at the board's center point).
+    hexCenter(q, r) {
+        return {
+            x: this.hexWidth * (3 / 4 * q) * this.spacing,
+            y: this.hexHeight * (q / 2 + r) * this.spacing,
+        };
+    }
+
+    // Draws a thin line between every pair of geometrically-adjacent placed
+    // hexes that actually have a valid parent/child relationship, so it's
+    // visually obvious which touching hexes are "really" connected versus
+    // just happening to sit next to each other.
+    renderConnections() {
+        if (!this.board || !this.boardExtent) return;
+
+        const existing = this.board.querySelector('.connection-lines');
+        if (existing) existing.remove();
+
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('class', 'connection-lines');
+        svg.setAttribute('width', this.boardExtent.width);
+        svg.setAttribute('height', this.boardExtent.height);
+        svg.style.left = `calc(50% + ${this.boardOffset.minX}px)`;
+        svg.style.top = `calc(50% + ${this.boardOffset.minY}px)`;
+
+        const placedHexes = this.grid.getAllHexes().filter(h => h.state === 'has_aspect' && h.aspect);
+        const seenPairs = new Set();
+
+        placedHexes.forEach(hex => {
+            const aspect = this.db.getAspect(hex.aspect);
+            if (!aspect) return;
+
+            this.grid.getNeighbors(hex.q, hex.r).forEach(neighbor => {
+                if (neighbor.state !== 'has_aspect' || !neighbor.aspect) return;
+
+                const pairKey = [`${hex.q},${hex.r}`, `${neighbor.q},${neighbor.r}`].sort().join('|');
+                if (seenPairs.has(pairKey)) return;
+                seenPairs.add(pairKey);
+
+                const neighborAspect = this.db.getAspect(neighbor.aspect);
+                if (!neighborAspect) return;
+
+                const isValid = aspect.components.includes(neighborAspect.id) || neighborAspect.components.includes(aspect.id);
+                if (!isValid) return;
+
+                const c1 = this.hexCenter(hex.q, hex.r);
+                const c2 = this.hexCenter(neighbor.q, neighbor.r);
+
+                const line = document.createElementNS(svgNS, 'line');
+                line.setAttribute('x1', c1.x - this.boardOffset.minX);
+                line.setAttribute('y1', c1.y - this.boardOffset.minY);
+                line.setAttribute('x2', c2.x - this.boardOffset.minX);
+                line.setAttribute('y2', c2.y - this.boardOffset.minY);
+                line.setAttribute('class', 'connection-line');
+                svg.appendChild(line);
+            });
+        });
+
+        this.board.insertBefore(svg, this.board.firstChild);
     }
 
     applyScale() {
@@ -198,6 +268,7 @@ export class GridRenderer {
         } else {
             label.innerHTML = '';
         }
+        this.renderConnections();
     }
 
     clearPaths() {
@@ -223,6 +294,8 @@ export class GridRenderer {
                 label.innerHTML = '';
             }
         });
+
+        this.renderConnections();
     }
 
     drawPaths(paths) {
@@ -259,6 +332,8 @@ export class GridRenderer {
                 label.innerHTML = '';
             }
         });
+
+        this.renderConnections();
     }
 
     setupWindowResize() {

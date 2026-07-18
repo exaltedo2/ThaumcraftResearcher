@@ -17,6 +17,18 @@
   transition: transform 0.3s ease;
 }
 
+.connection-lines {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.connection-line {
+  stroke: rgba(199, 125, 255, 0.65);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
 .hex {
   position: absolute;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);

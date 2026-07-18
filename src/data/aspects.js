@@ -28,7 +28,7 @@ export const standardCompounds = [
     { id: 'bestia', name: 'Bestia', components: ['motus', 'victus'], color: '#9f6409' },
     { id: 'corpus', name: 'Corpus', components: ['mortuus', 'bestia'], color: '#ee478d' },
     { id: 'herba', name: 'Herba', components: ['victus', 'terra'], color: '#01ac00' },
-    { id: 'arbor', name: 'Arbor', components: ['herba', 'terra'], color: '#876531' },
+    { id: 'arbor', name: 'Arbor', components: ['aer', 'herba'], color: '#876531' },
     { id: 'machina', name: 'Machina', components: ['motus', 'instrumentum'], color: '#8080a0' },
     { id: 'alienis', name: 'Alienis', components: ['vacuos', 'tenebrae'], color: '#805080' },
     { id: 'cognitio', name: 'Cognitio', components: ['ignis', 'spiritus'], color: '#ffc241' },
@@ -48,6 +48,11 @@ export const standardCompounds = [
 
     { id: 'vinculum', name: 'Vinculum', components: ['motus', 'perditio'], color: '#9a8080' },
     { id: 'limus', name: 'Limus', components: ['victus', 'aqua'], color: '#01f800' },
+
+    { id: 'iter', name: 'Iter', components: ['motus', 'terra'], color: '#a0785a' },
+    { id: 'exanimis', name: 'Exanimis', components: ['motus', 'mortuus'], color: '#8a8aa0' },
+    { id: 'meto', name: 'Meto', components: ['instrumentum', 'messis'], color: '#d4a017' },
+    { id: 'tempestas', name: 'Tempestas', components: ['aer', 'aqua'], color: '#7a8ca8' },
 ];
 
 export const modAspects = {
