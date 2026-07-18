@@ -57,13 +57,13 @@ export const standardCompounds = [
 
 export const modAspects = {
     gregtech: [
-        { id: 'electrum', name: 'Electrum', components: ['potentia', 'metallum'], color: '#e6e600' },
+        { id: 'electrum', name: 'Electrum', components: ['potentia', 'machina'], color: '#e6e600' },
         { id: 'magneto', name: 'Magneto', components: ['metallum', 'iter'], color: '#c0c0c0' }
     ],
     gt_plus_plus: [
         { id: 'nebrisum', name: 'Nebrisum', components: ['lucrum', 'perfodio'], color: '#d4af37' },
         { id: 'radio', name: 'Radio', components: ['potentia', 'lux'], color: '#40ff40' },
-        { id: 'strontio', name: 'Strontio', components: ['cognitio', 'potentia'], color: '#ff4040' }
+        { id: 'strontio', name: 'Strontio', components: ['perditio', 'cognitio'], color: '#ff4040' }
     ],
     magicbees: [
         { id: 'tempus', name: 'Tempus', components: ['vacuos', 'ordo'], color: '#d6b885' }

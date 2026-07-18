@@ -24,6 +24,14 @@ export class Solver {
         const endpoints = this.grid.getEndpoints();
         if (endpoints.length < 2) return null; // Nothing to connect
 
+        // Scratch occupancy map for this solve only ("q,r" -> aspect id),
+        // seeded with the real user-placed endpoints. The search reads/writes
+        // this instead of the live grid, so a failed or partial solve never
+        // leaves stray mutations on the shared grid for a caller to clean up
+        // -- the caller stays responsible for applying the result (or not).
+        this.placements = new Map();
+        endpoints.forEach(e => this.placements.set(`${e.q},${e.r}`, e.aspect));
+
         // Connected set of hexes (includes endpoints and intermediate paths)
         // Set of { q, r, aspect }
         const connectedSet = [];
@@ -48,18 +56,7 @@ export class Solver {
             for (let i = 1; i < path.length; i++) { // Skip index 0 as it's already in connectedSet
                 const node = path[i];
                 connectedSet.push(node);
-
-                // Apply to the grid immediately (not just at the very end) so
-                // the NEXT findShortestPathFromSet call sees this hex as
-                // occupied. Without this, every iteration searches against a
-                // grid that still looks empty wherever earlier iterations
-                // placed something, so it's free to independently claim that
-                // same coordinate for a different aspect -- last write wins
-                // and silently breaks whichever path lost the race.
-                const hexData = this.grid.getHex(node.q, node.r);
-                if (hexData && hexData.state !== 'has_aspect') {
-                    this.grid.setHexState(node.q, node.r, 'has_aspect', node.aspect);
-                }
+                this.placements.set(`${node.q},${node.r}`, node.aspect);
 
                 // If this node is one of the unreached endpoints, remove it from the unreached list
                 const idx = unreachedEndpoints.findIndex(e => e.q === node.q && e.r === node.r);
@@ -70,6 +67,8 @@ export class Solver {
 
             finalPaths.push(path);
         }
+
+        this.placements = null;
 
         if (unreachedEndpoints.length > 0) {
             // Failed to connect all endpoints
@@ -113,7 +112,8 @@ export class Solver {
             const validNextAspects = this.graph.getValidConnections(current.aspect, forceAspects);
 
             for (const neighbor of neighbors) {
-                // If neighbor is inactive, skip
+                // Gaps are real board state (user-toggled), not something
+                // this solve's scratch map tracks -- always read from the grid.
                 if (neighbor.state === 'inactive') continue;
 
                 // A physical hex can only ever hold one aspect. The state key
@@ -123,7 +123,25 @@ export class Solver {
                 // placements for one real cell, which isn't physically valid.
                 if (this.pathUsesCoordinate(cameFrom, current, neighbor.q, neighbor.r)) continue;
 
-                if (neighbor.state === 'active_empty') {
+                const neighborKey = `${neighbor.q},${neighbor.r}`;
+                const claimedAspect = this.placements.get(neighborKey);
+
+                if (claimedAspect) {
+                    // Already placed -- either a real endpoint, or claimed by
+                    // an earlier iteration of this same solve. Can only step
+                    // onto it if it's a valid connection.
+                    if (validNextAspects.includes(claimedAspect)) {
+                        const stepCost = 0; // Cost to step on an existing endpoint is 0 (or minimal)
+                        const newCost = costSoFar.get(currentKey) + stepCost;
+                        const nextKey = getStateKey(neighbor.q, neighbor.r, claimedAspect);
+
+                        if (!costSoFar.has(nextKey) || newCost < costSoFar.get(nextKey)) {
+                            costSoFar.set(nextKey, newCost);
+                            cameFrom.set(nextKey, current);
+                            pq.enqueue({ q: neighbor.q, r: neighbor.r, aspect: claimedAspect }, newCost);
+                        }
+                    }
+                } else {
                     for (const nextAspect of validNextAspects) {
                         // Add a tiny random fraction to cost to randomize paths of equal length
                         const stepCost = this.graph.getCost(nextAspect) + (Math.random() * 0.001);
@@ -134,20 +152,6 @@ export class Solver {
                             costSoFar.set(nextKey, newCost);
                             cameFrom.set(nextKey, current);
                             pq.enqueue({ q: neighbor.q, r: neighbor.r, aspect: nextAspect }, newCost);
-                        }
-                    }
-                } else if (neighbor.state === 'has_aspect') {
-                    // It's an endpoint (or an already placed aspect)
-                    // We can only step onto it if its aspect is in our valid next aspects
-                    if (validNextAspects.includes(neighbor.aspect)) {
-                        const stepCost = 0; // Cost to step on an existing endpoint is 0 (or minimal)
-                        const newCost = costSoFar.get(currentKey) + stepCost;
-                        const nextKey = getStateKey(neighbor.q, neighbor.r, neighbor.aspect);
-
-                        if (!costSoFar.has(nextKey) || newCost < costSoFar.get(nextKey)) {
-                            costSoFar.set(nextKey, newCost);
-                            cameFrom.set(nextKey, current);
-                            pq.enqueue({ q: neighbor.q, r: neighbor.r, aspect: neighbor.aspect }, newCost);
                         }
                     }
                 }
