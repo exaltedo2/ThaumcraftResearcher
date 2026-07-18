@@ -8,7 +8,7 @@ A modern, fast, and feature-rich aspect routing solver for the Thaumcraft 4 rese
 - **Custom Aspects:** Add custom aspects on the fly, blending parent colors to generate unique visual icons.
 - **Modern UI:** Glassmorphism design, spatial overlapping layout, drag-and-drop mechanics, and high-quality aspect graphics.
 - **Preferences:** "Use More" prioritization lets you favor certain aspects to burn through excess research points.
-- **Mobile Friendly:** A responsive layout plus a tap-to-select/tap-to-place flow (long-press a hex for gaps) for phones and tablets, no dragging required.
+- **Mobile Friendly:** A responsive layout plus a tap-to-select/tap-to-place flow (tap an empty hex with nothing selected to toggle gaps) for phones and tablets, no dragging required.
 
 ## How to Use
 Visit the live site: [Thaumcraft Researcher](https://exaltedo2.github.io/ThaumcraftResearcher/)
