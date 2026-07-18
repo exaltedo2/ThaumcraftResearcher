@@ -83,7 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gridRenderer.render();
     });
 
-    // 7. Solver Integration
+    // 7. Reset Hexes Button
+    const btnResetHexes = document.getElementById('btn-reset-hexes');
+    btnResetHexes.addEventListener('click', () => {
+        grid = new HexGrid(currentRadius);
+        gridRenderer.grid = grid; // update ref
+        gridRenderer.selectedAspectId = null;
+        aspectListUI.clearSelection();
+        gridRenderer.render();
+    });
+
+    // 8. Solver Integration
     const btnResearch = document.getElementById('btn-research');
     btnResearch.addEventListener('click', () => {
         // Clear paths visually and from the model BEFORE solving
