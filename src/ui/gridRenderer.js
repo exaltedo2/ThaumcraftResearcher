@@ -19,9 +19,9 @@ export class GridRenderer {
 
         const hexes = this.grid.getAllHexes();
 
-        // Calculate board dimensions
-        const width = Math.sqrt(3) * this.hexSize;
-        const height = 2 * this.hexSize;
+        // Calculate board dimensions (flat-top hexagons, matching Thaumcraft's own research grid)
+        const width = 2 * this.hexSize;
+        const height = Math.sqrt(3) * this.hexSize;
 
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
@@ -31,9 +31,9 @@ export class GridRenderer {
             hexEl.dataset.q = hexData.q;
             hexEl.dataset.r = hexData.r;
 
-            // Axial to pixel coords (Pointy top)
-            const x = width * (hexData.q + hexData.r / 2) * this.spacing;
-            const y = height * (3/4 * hexData.r) * this.spacing;
+            // Axial to pixel coords (Flat top)
+            const x = width * (3/4 * hexData.q) * this.spacing;
+            const y = height * (hexData.q / 2 + hexData.r) * this.spacing;
 
             minX = Math.min(minX, x - width / 2);
             maxX = Math.max(maxX, x + width / 2);
