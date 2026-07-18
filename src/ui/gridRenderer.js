@@ -113,46 +113,35 @@ export class GridRenderer {
     }
 
     setupHexInteractions(hexEl, hexData, label) {
-        // Right click (desktop) / long-press (touch): has_aspect -> active_empty -> inactive -> active_empty
+        // Right click (desktop): has_aspect -> active_empty -> inactive -> active_empty
         hexEl.addEventListener('contextmenu', (e) => {
             e.preventDefault();
             this.toggleGapCycle(hexData, hexEl, label);
         });
 
-        let pressTimer = null;
-        let longPressFired = false;
-
-        hexEl.addEventListener('touchstart', () => {
-            longPressFired = false;
-            pressTimer = setTimeout(() => {
-                longPressFired = true;
-                this.toggleGapCycle(hexData, hexEl, label);
-                if (navigator.vibrate) navigator.vibrate(15);
-            }, 500);
-        }, { passive: true });
-
-        hexEl.addEventListener('touchend', () => clearTimeout(pressTimer));
-        hexEl.addEventListener('touchmove', () => clearTimeout(pressTimer));
-
         // Click / tap: place the selected aspect, or clear one that's already placed.
-        // Gap toggling on an empty hex is right-click / long-press only (see above) --
-        // a plain click here must never silently turn an empty hex into a void.
+        // Touch devices have no right-click, so a plain tap on an empty/inactive
+        // hex with nothing selected toggles the gap there instead. On desktop
+        // (a device with a real mouse) that same click does nothing, so an
+        // ordinary left-click can never silently turn a hex into a void.
         hexEl.addEventListener('click', (e) => {
             e.preventDefault();
-
-            if (longPressFired) {
-                longPressFired = false;
-                return;
-            }
-
             this.clearPaths();
+
+            const isTouch = !window.matchMedia('(hover: hover)').matches;
 
             if (hexData.state === 'has_aspect') {
                 this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
                 hexData.isEndpoint = false;
-            } else if (hexData.state === 'active_empty' && this.selectedAspectId) {
-                this.grid.setHexState(hexData.q, hexData.r, 'has_aspect', this.selectedAspectId);
-                hexData.isEndpoint = true;
+            } else if (hexData.state === 'active_empty') {
+                if (this.selectedAspectId) {
+                    this.grid.setHexState(hexData.q, hexData.r, 'has_aspect', this.selectedAspectId);
+                    hexData.isEndpoint = true;
+                } else if (isTouch) {
+                    this.grid.setHexState(hexData.q, hexData.r, 'inactive');
+                }
+            } else if (hexData.state === 'inactive' && isTouch) {
+                this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
             }
 
             this.updateHexVisuals(hexEl, hexData, label);
