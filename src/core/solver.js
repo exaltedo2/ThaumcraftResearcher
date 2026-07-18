@@ -24,9 +24,6 @@ export class Solver {
         const endpoints = this.grid.getEndpoints();
         if (endpoints.length < 2) return null; // Nothing to connect
 
-        // Clear existing paths first
-        this.clearPaths();
-
         // Connected set of hexes (includes endpoints and intermediate paths)
         // Set of { q, r, aspect }
         const connectedSet = [];
@@ -41,7 +38,7 @@ export class Solver {
         // Prim-Dijkstra hybrid to connect all endpoints
         while (unreachedEndpoints.length > 0) {
             const path = this.findShortestPathFromSet(connectedSet, unreachedEndpoints);
-            
+
             if (!path) {
                 console.warn("Could not find a path to remaining endpoints.");
                 break; // Unsolvable
@@ -51,7 +48,19 @@ export class Solver {
             for (let i = 1; i < path.length; i++) { // Skip index 0 as it's already in connectedSet
                 const node = path[i];
                 connectedSet.push(node);
-                
+
+                // Apply to the grid immediately (not just at the very end) so
+                // the NEXT findShortestPathFromSet call sees this hex as
+                // occupied. Without this, every iteration searches against a
+                // grid that still looks empty wherever earlier iterations
+                // placed something, so it's free to independently claim that
+                // same coordinate for a different aspect -- last write wins
+                // and silently breaks whichever path lost the race.
+                const hexData = this.grid.getHex(node.q, node.r);
+                if (hexData && hexData.state !== 'has_aspect') {
+                    this.grid.setHexState(node.q, node.r, 'has_aspect', node.aspect);
+                }
+
                 // If this node is one of the unreached endpoints, remove it from the unreached list
                 const idx = unreachedEndpoints.findIndex(e => e.q === node.q && e.r === node.r);
                 if (idx !== -1) {
@@ -67,19 +76,7 @@ export class Solver {
             return null;
         }
 
-        this.applyPathsToGrid(finalPaths);
         return finalPaths;
-    }
-
-    clearPaths() {
-        this.grid.getAllHexes().forEach(hex => {
-            if (hex.state === 'has_aspect' && !hex.isEndpoint) {
-                // Wait, we need to know if it's user placed or algorithm placed.
-                // Actually, right-click sets state to has_aspect and aspect=id.
-                // We should distinguish user endpoints from solver paths.
-            }
-        });
-        // We will just manage this via UI classes and properties.
     }
 
     // Finds the shortest path from ANY node in connectedSet to ANY node in targetEndpoints
@@ -109,7 +106,6 @@ export class Solver {
             }
 
             const currentKey = getStateKey(current.q, current.r, current.aspect);
-            const currentHex = this.grid.getHex(current.q, current.r);
             const neighbors = this.grid.getNeighbors(current.q, current.r);
             
             // Allow connections to any endpoint aspect, even if disabled
@@ -119,6 +115,13 @@ export class Solver {
             for (const neighbor of neighbors) {
                 // If neighbor is inactive, skip
                 if (neighbor.state === 'inactive') continue;
+
+                // A physical hex can only ever hold one aspect. The state key
+                // is "q,r,aspect", so without this check the search could
+                // revisit the same (q,r) later in the same path under a
+                // different hypothetical aspect -- two different "virtual"
+                // placements for one real cell, which isn't physically valid.
+                if (this.pathUsesCoordinate(cameFrom, current, neighbor.q, neighbor.r)) continue;
 
                 if (neighbor.state === 'active_empty') {
                     for (const nextAspect of validNextAspects) {
@@ -154,6 +157,18 @@ export class Solver {
         return null;
     }
 
+    // Walks the ancestor chain of `state` (via cameFrom) to check whether
+    // (q, r) already appears somewhere earlier in that same candidate path.
+    pathUsesCoordinate(cameFrom, state, q, r) {
+        let cur = state;
+        while (cur != null) {
+            if (cur.q === q && cur.r === r) return true;
+            const key = `${cur.q},${cur.r},${cur.aspect}`;
+            cur = cameFrom.get(key);
+        }
+        return false;
+    }
+
     reconstructPath(cameFrom, current) {
         const path = [];
         const getStateKey = (q, r, aspect) => `${q},${r},${aspect}`;
@@ -164,10 +179,5 @@ export class Solver {
             current = cameFrom.get(key);
         }
         return path.reverse();
-    }
-
-    applyPathsToGrid(finalPaths) {
-        // We will emit an event or return the paths so the UI can render them
-        // The UI will be responsible for drawing the "is-path" style and aspects
     }
 }
