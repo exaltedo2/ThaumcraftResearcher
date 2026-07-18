@@ -1,11 +1,13 @@
 import { modAspects } from '../data/aspects.js';
 
 export class AspectListUI {
-    constructor(db, containerId) {
+    constructor(db, containerId, onAspectSelected = null) {
         this.db = db;
         this.container = document.getElementById(containerId);
+        this.onAspectSelected = onAspectSelected;
         this.searchQuery = '';
         this.currentEditAspectId = null;
+        this.selectedAspectId = null;
         this.setupModToggles();
         this.setupSearch();
         this.setupModal();
@@ -184,6 +186,9 @@ export class AspectListUI {
             list.forEach(aspect => {
                 const item = document.createElement('div');
                 item.className = 'aspect-item aspect-draggable';
+                if (this.selectedAspectId === aspect.id) {
+                    item.classList.add('selected');
+                }
                 item.setAttribute('draggable', 'true');
                 item.dataset.id = aspect.id;
 
@@ -216,6 +221,18 @@ export class AspectListUI {
                 `;
 
                 this.container.appendChild(item);
+
+                // Select aspect on click (for mobile tap-to-place)
+                item.addEventListener('click', (e) => {
+                    // Ignore clicks on buttons/checkboxes
+                    if (e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'button') return;
+                    
+                    this.selectedAspectId = aspect.id;
+                    this.render(); // Re-render to show selected state
+                    if (this.onAspectSelected) {
+                        this.onAspectSelected(aspect.id);
+                    }
+                });
 
                 // Drag event
                 item.addEventListener('dragstart', (e) => {
@@ -312,6 +329,9 @@ export class AspectListUI {
 
         // Update custom aspect form dropdowns
         this.updateCustomDropdowns();
+
+        // Save state on any change that triggers a re-render
+        if (window.saveAppConfig) window.saveAppConfig();
     }
 
     updateCustomDropdowns() {

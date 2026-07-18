@@ -18,7 +18,7 @@ Visit the live site: [Thaumcraft Researcher](https://exaltedo2.github.io/Thaumcr
 4. If you don't like a path, click "Research!" again to randomly generate alternative equal-cost paths.
 
 ## Development
-This application was entirely written, designed, debugged, and optimized by an AI (Google's Antigravity coding assistant) in pair-programming collaboration with its creator.
+This application was built and optimized with the assistance of Claude to provide the fastest and cleanest pathfinding experience possible.
 
 **Stack:**
 - Vanilla JavaScript (ES6 Modules)
@@ -32,9 +32,9 @@ npm run dev
 ```
 
 ## Credits
-HQ Aspect image masks are adapted from `universal_tc_research_solver`.
+- Aspect icons are the property of Azanor (creator of Thaumcraft 4).
+- HQ Aspect image masks are adapted from `universal_tc_research_solver` (MIT License).
 
 ## Contact & Feedback
 If you have any suggestions, feature requests, or just want to reach out, feel free to contact me:
 - **Discord:** `exaltedo2`
-- **Email:** [exalt_business@hotmail.com](mailto:exalt_business@hotmail.com)

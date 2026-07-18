@@ -3,6 +3,7 @@ export class GridRenderer {
         this.grid = grid;
         this.container = document.getElementById(containerId);
         this.db = db;
+        this.selectedAspectId = null;
         this.hexSize = 40; // pixel size
         this.spacing = 1.05; // gap between hexes
         this.render();
@@ -96,6 +97,28 @@ export class GridRenderer {
                 hexData.isEndpoint = false;
             } else if (hexData.state === 'active_empty') {
                 this.grid.setHexState(hexData.q, hexData.r, 'inactive');
+            } else if (hexData.state === 'inactive') {
+                this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
+            }
+
+            this.updateHexVisuals(hexEl, hexData, label);
+        });
+
+        // Click cycle (Mobile fallback): active_empty -> has_aspect (if selected) -> active_empty -> inactive
+        hexEl.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.clearPaths();
+
+            if (hexData.state === 'has_aspect') {
+                this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
+                hexData.isEndpoint = false;
+            } else if (hexData.state === 'active_empty') {
+                if (this.selectedAspectId) {
+                    this.grid.setHexState(hexData.q, hexData.r, 'has_aspect', this.selectedAspectId);
+                    hexData.isEndpoint = true;
+                } else {
+                    this.grid.setHexState(hexData.q, hexData.r, 'inactive');
+                }
             } else if (hexData.state === 'inactive') {
                 this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
             }

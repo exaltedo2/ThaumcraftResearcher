@@ -10,21 +10,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Database
     const db = new AspectDatabase();
 
+    // -- State Persistence --
+    window.saveAppConfig = () => {
+        const config = {
+            enabledAspects: Array.from(db.enabledAspects),
+            useMoreAspects: Array.from(db.useMoreAspects),
+            customAspects: Array.from(db.aspects.values()).filter(a => a.isCustom),
+            gridSize: currentRadius
+        };
+        localStorage.setItem('thaumcraft_researcher_config', JSON.stringify(config));
+    };
+
+    let currentRadius = 3;
+    const savedConfigStr = localStorage.getItem('thaumcraft_researcher_config');
+    if (savedConfigStr) {
+        try {
+            const config = JSON.parse(savedConfigStr);
+            if (config.gridSize) currentRadius = config.gridSize;
+            if (config.customAspects) {
+                config.customAspects.forEach(a => db.aspects.set(a.id, a));
+            }
+            if (config.enabledAspects) {
+                db.enabledAspects.clear();
+                config.enabledAspects.forEach(id => db.enabledAspects.add(id));
+            }
+            if (config.useMoreAspects) {
+                db.useMoreAspects.clear();
+                config.useMoreAspects.forEach(id => db.useMoreAspects.add(id));
+            }
+        } catch (e) {
+            console.error("Failed to load config", e);
+        }
+    }
+
     // 2. Initialize UI for Aspect List
-    const aspectListUI = new AspectListUI(db, 'aspect-list');
+    const aspectListUI = new AspectListUI(db, 'aspect-list', (aspectId) => {
+        gridRenderer.selectedAspectId = aspectId;
+    });
 
     // 3. Initialize Custom Aspect Creator
     const customAspectUI = new CustomAspectUI(db, aspectListUI);
 
     // 4. Initialize Grid and Renderer
-    let currentRadius = 3;
     let grid = new HexGrid(currentRadius);
     let gridRenderer = new GridRenderer(grid, 'grid-container', db);
 
     // 5. Grid Size Selector
     const gridSizeSelect = document.getElementById('grid-size');
+    gridSizeSelect.value = currentRadius;
     gridSizeSelect.addEventListener('change', (e) => {
         currentRadius = parseInt(e.target.value, 10);
+        if (window.saveAppConfig) window.saveAppConfig();
         grid = new HexGrid(currentRadius);
         gridRenderer.grid = grid; // update ref
         gridRenderer.render();

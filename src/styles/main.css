@@ -201,6 +201,12 @@ option {
   border-color: var(--primary-color);
 }
 
+.aspect-item.selected {
+  border-color: var(--primary-color);
+  background: rgba(157, 78, 221, 0.15);
+  box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+}
+
 .aspect-item-header {
   display: flex;
   align-items: center;
