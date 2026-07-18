@@ -93,6 +93,7 @@ export class GridRenderer {
 
             if (hexData.state === 'has_aspect') {
                 this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
+                hexData.isEndpoint = false;
             } else if (hexData.state === 'active_empty') {
                 this.grid.setHexState(hexData.q, hexData.r, 'inactive');
             } else if (hexData.state === 'inactive') {
