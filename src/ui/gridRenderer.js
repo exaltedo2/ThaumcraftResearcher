@@ -12,16 +12,18 @@ export class GridRenderer {
 
     render() {
         this.container.innerHTML = '';
-        
+
         const board = document.createElement('div');
         board.className = 'grid-board';
         this.board = board;
 
         const hexes = this.grid.getAllHexes();
-        
+
         // Calculate board dimensions
         const width = Math.sqrt(3) * this.hexSize;
         const height = 2 * this.hexSize;
+
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
         hexes.forEach(hexData => {
             const hexEl = document.createElement('div');
@@ -32,6 +34,11 @@ export class GridRenderer {
             // Axial to pixel coords (Pointy top)
             const x = width * (hexData.q + hexData.r / 2) * this.spacing;
             const y = height * (3/4 * hexData.r) * this.spacing;
+
+            minX = Math.min(minX, x - width / 2);
+            maxX = Math.max(maxX, x + width / 2);
+            minY = Math.min(minY, y - height / 2);
+            maxY = Math.max(maxY, y + height / 2);
 
             hexEl.style.width = `${width}px`;
             hexEl.style.height = `${height}px`;
@@ -58,6 +65,27 @@ export class GridRenderer {
         });
 
         this.container.appendChild(board);
+
+        // Natural (unscaled) footprint of the whole hex cluster, used to
+        // shrink the board to fit small viewports instead of overflowing them.
+        this.boardExtent = { width: maxX - minX, height: maxY - minY };
+        this.applyScale();
+    }
+
+    applyScale() {
+        if (!this.board || !this.boardExtent || this.boardExtent.width <= 0) return;
+
+        const containerRect = this.container.getBoundingClientRect();
+        if (containerRect.width === 0 || containerRect.height === 0) return;
+
+        const padding = 0.9; // leave a little breathing room
+        const scale = Math.min(
+            1,
+            (containerRect.width * padding) / this.boardExtent.width,
+            (containerRect.height * padding) / this.boardExtent.height
+        );
+
+        this.board.style.transform = `scale(${scale})`;
     }
 
     setLabelContent(label, aspectId) {
@@ -226,6 +254,11 @@ export class GridRenderer {
     }
 
     setupWindowResize() {
-        // Zoom/pan logic could go here, for now it's responsive enough via CSS flex
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => this.applyScale(), 100);
+        });
+        window.addEventListener('orientationchange', () => this.applyScale());
     }
 }

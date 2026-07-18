@@ -366,10 +366,14 @@ option {
     width: 100%;
   }
 
-  /* Grid first so it's the first thing visible on load, sidebars below it */
+  /* Grid first so it's the first thing visible on load, sidebars below it.
+     Use a definite `height` (not just min-height) so the grid-container's
+     height:100% (and therefore the hex board's auto-scale calc) has
+     something real to resolve against instead of collapsing to 0. */
   .main-content {
     order: 1;
-    min-height: 70vh;
+    height: 70vh;
+    flex-shrink: 0;
   }
 
   .left-sidebar {
