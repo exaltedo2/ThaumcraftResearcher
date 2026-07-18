@@ -113,42 +113,46 @@ export class GridRenderer {
     }
 
     setupHexInteractions(hexEl, hexData, label) {
-        // Right click cycle: has_aspect -> active_empty -> inactive -> active_empty
+        // Right click (desktop) / long-press (touch): has_aspect -> active_empty -> inactive -> active_empty
         hexEl.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            
-            // Remove path highlighting on user interaction
-            this.clearPaths();
-
-            if (hexData.state === 'has_aspect') {
-                this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
-                hexData.isEndpoint = false;
-            } else if (hexData.state === 'active_empty') {
-                this.grid.setHexState(hexData.q, hexData.r, 'inactive');
-            } else if (hexData.state === 'inactive') {
-                this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
-            }
-
-            this.updateHexVisuals(hexEl, hexData, label);
+            this.toggleGapCycle(hexData, hexEl, label);
         });
 
-        // Click cycle (Mobile fallback): active_empty -> has_aspect (if selected) -> active_empty -> inactive
+        let pressTimer = null;
+        let longPressFired = false;
+
+        hexEl.addEventListener('touchstart', () => {
+            longPressFired = false;
+            pressTimer = setTimeout(() => {
+                longPressFired = true;
+                this.toggleGapCycle(hexData, hexEl, label);
+                if (navigator.vibrate) navigator.vibrate(15);
+            }, 500);
+        }, { passive: true });
+
+        hexEl.addEventListener('touchend', () => clearTimeout(pressTimer));
+        hexEl.addEventListener('touchmove', () => clearTimeout(pressTimer));
+
+        // Click / tap: place the selected aspect, or clear one that's already placed.
+        // Gap toggling on an empty hex is right-click / long-press only (see above) --
+        // a plain click here must never silently turn an empty hex into a void.
         hexEl.addEventListener('click', (e) => {
             e.preventDefault();
+
+            if (longPressFired) {
+                longPressFired = false;
+                return;
+            }
+
             this.clearPaths();
 
             if (hexData.state === 'has_aspect') {
                 this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
                 hexData.isEndpoint = false;
-            } else if (hexData.state === 'active_empty') {
-                if (this.selectedAspectId) {
-                    this.grid.setHexState(hexData.q, hexData.r, 'has_aspect', this.selectedAspectId);
-                    hexData.isEndpoint = true;
-                } else {
-                    this.grid.setHexState(hexData.q, hexData.r, 'inactive');
-                }
-            } else if (hexData.state === 'inactive') {
-                this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
+            } else if (hexData.state === 'active_empty' && this.selectedAspectId) {
+                this.grid.setHexState(hexData.q, hexData.r, 'has_aspect', this.selectedAspectId);
+                hexData.isEndpoint = true;
             }
 
             this.updateHexVisuals(hexEl, hexData, label);
@@ -181,6 +185,21 @@ export class GridRenderer {
                 }
             }
         });
+    }
+
+    toggleGapCycle(hexData, hexEl, label) {
+        this.clearPaths();
+
+        if (hexData.state === 'has_aspect') {
+            this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
+            hexData.isEndpoint = false;
+        } else if (hexData.state === 'active_empty') {
+            this.grid.setHexState(hexData.q, hexData.r, 'inactive');
+        } else if (hexData.state === 'inactive') {
+            this.grid.setHexState(hexData.q, hexData.r, 'active_empty');
+        }
+
+        this.updateHexVisuals(hexEl, hexData, label);
     }
 
     updateHexVisuals(hexEl, hexData, label) {

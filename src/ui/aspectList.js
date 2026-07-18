@@ -251,11 +251,13 @@ export class AspectListUI {
                 enableCb.addEventListener('change', (e) => {
                     this.db.toggleAspect(aspect.id, e.target.checked);
                     this.checkModStates(); // Update mod checkboxes
+                    if (window.saveAppConfig) window.saveAppConfig();
                 });
 
                 const useMoreCb = item.querySelector('.aspect-use-more');
                 useMoreCb.addEventListener('change', (e) => {
                     this.db.toggleUseMore(aspect.id, e.target.checked);
+                    if (window.saveAppConfig) window.saveAppConfig();
                 });
 
                 // Delete custom aspect
@@ -279,7 +281,13 @@ export class AspectListUI {
                     });
                 }
 
-                // Tooltip
+                // Tooltip (only on devices with a real mouse -- touch fires a
+                // synthetic mouseenter with no matching mouseleave, so it
+                // would otherwise get stuck on screen after a tap)
+                if (!window.matchMedia('(hover: hover)').matches) {
+                    return;
+                }
+
                 item.addEventListener('mouseenter', (e) => {
                     const tooltip = document.getElementById('aspect-tooltip');
                     if (!tooltip) return;

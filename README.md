@@ -8,11 +8,12 @@ A modern, fast, and feature-rich aspect routing solver for the Thaumcraft 4 rese
 - **Custom Aspects:** Add custom aspects on the fly, blending parent colors to generate unique visual icons.
 - **Modern UI:** Glassmorphism design, spatial overlapping layout, drag-and-drop mechanics, and high-quality aspect graphics.
 - **Preferences:** "Use More" prioritization lets you favor certain aspects to burn through excess research points.
+- **Mobile Friendly:** A responsive layout plus a tap-to-select/tap-to-place flow (long-press a hex for gaps) for phones and tablets, no dragging required.
 
 ## How to Use
 Visit the live site: [Thaumcraft Researcher](https://exaltedo2.github.io/ThaumcraftResearcher/)
 
-1. Drag and drop aspects from the sidebar onto the active hex grid endpoints.
+1. Drag and drop aspects from the sidebar onto the active hex grid endpoints (on mobile: tap an aspect, then tap a hex).
 2. Select which mods or specific aspects you have enabled.
 3. Click **Research!** to instantly find the shortest path connecting all your endpoints.
 4. If you don't like a path, click "Research!" again to randomly generate alternative equal-cost paths.

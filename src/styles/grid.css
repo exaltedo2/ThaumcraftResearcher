@@ -25,6 +25,9 @@
   justify-content: center;
   transition: all 0.2s ease;
   cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .hex-inner {
