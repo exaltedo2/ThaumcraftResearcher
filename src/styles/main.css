@@ -131,6 +131,23 @@ body {
   box-shadow: 0 0 15px var(--primary-hover);
 }
 
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--panel-border);
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
 .setting-group {
   display: flex;
   flex-direction: column;

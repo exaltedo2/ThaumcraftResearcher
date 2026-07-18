@@ -35,7 +35,8 @@
         
         <div class="controls">
           <button id="btn-research" class="primary-btn">Research!</button>
-          
+          <button id="btn-reset" class="secondary-btn">Reset Changes</button>
+
           <div class="setting-group">
             <label for="grid-size">Grid Size:</label>
             <select id="grid-size">
@@ -95,8 +96,9 @@
           <p><strong>1. Place Aspects:</strong> Drag aspects from the left library and drop them onto the empty hexes to set your starting endpoints. <em>On mobile: tap an aspect to select it, then tap a hex to place it.</em></p>
           <p><strong>2. Add/Remove Gaps:</strong> Right-click an empty active hex to turn it into an inactive void (gap). Right-click again to restore it. <em>On mobile: with no aspect selected, tap an empty hex instead.</em></p>
           <p><strong>3. Use More:</strong> Check "Use More" under an aspect to make the algorithm prefer using it.</p>
-          <p><strong>4. Solve:</strong> Click "Research!" to automatically find the shortest parent-child path connecting your placed aspects.</p>
-          <p><strong>5. Edit Formulas:</strong> Click the ⚙️ icon next to a compound aspect to edit its parents.</p>
+          <p><strong>4. Enable/Disable:</strong> Uncheck the box next to an aspect's name to exclude it from the solve entirely -- unchecked aspects will never be used to connect your research, so uncheck any you don't want the solver to route through.</p>
+          <p><strong>5. Solve:</strong> Click "Research!" to automatically find the shortest parent-child path connecting your placed aspects.</p>
+          <p><strong>6. Edit Formulas:</strong> Click the ⚙️ icon next to a compound aspect to edit its parents.</p>
         </div>
       </aside>
     </div>

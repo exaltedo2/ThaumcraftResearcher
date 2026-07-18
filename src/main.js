@@ -64,7 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
         aspectListUI.clearSelection();
     });
 
-    // 5. Grid Size Selector
+    // 5. Reset Button
+    const btnReset = document.getElementById('btn-reset');
+    btnReset.addEventListener('click', () => {
+        if (!confirm("Reset all changes? This will clear custom aspects, enabled/disabled aspects, and grid size back to defaults.")) return;
+        localStorage.removeItem('thaumcraft_researcher_config');
+        location.reload();
+    });
+
+    // 6. Grid Size Selector
     const gridSizeSelect = document.getElementById('grid-size');
     gridSizeSelect.value = currentRadius;
     gridSizeSelect.addEventListener('change', (e) => {
@@ -75,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gridRenderer.render();
     });
 
-    // 6. Solver Integration
+    // 7. Solver Integration
     const btnResearch = document.getElementById('btn-research');
     btnResearch.addEventListener('click', () => {
         // Clear paths visually and from the model BEFORE solving
