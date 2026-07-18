@@ -349,4 +349,54 @@ option {
 
 .aspect-tier-primal { color: #ffd700; }
 .aspect-tier-compound { color: #a0a0a0; }
- 
+
+/* Responsive: stack the three columns on narrow / mobile viewports instead of
+   forcing a 620px+ fixed-width flex row into a phone-width screen. */
+@media (max-width: 900px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #app {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+  }
+
+  /* Grid first so it's the first thing visible on load, sidebars below it */
+  .main-content {
+    order: 1;
+    min-height: 70vh;
+  }
+
+  .left-sidebar {
+    order: 2;
+  }
+
+  .right-sidebar {
+    order: 3;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: none;
+  }
+
+  .left-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--panel-border);
+  }
+
+  .right-sidebar {
+    border-left: none;
+    border-top: 1px solid var(--panel-border);
+  }
+
+  .aspect-list-container {
+    flex-grow: 0;
+    overflow-y: visible;
+  }
+}
