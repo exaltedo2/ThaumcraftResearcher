@@ -98,19 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         thaumicinsurgence: 'Thaumic Insurgence',
     };
 
-    // A hex can be turned into a gap only if doing so wouldn't strand a
-    // neighboring endpoint with fewer than 2 usable neighbors -- mirrors the
-    // safety check the real research table uses when it punches blanks in.
-    const canRemoveHex = (hex) => {
-        return grid.getNeighbors(hex.q, hex.r).every(n => {
-            if (n.state !== 'has_aspect' || !n.isEndpoint) return true;
-            const activeNeighborCount = grid.getNeighbors(n.q, n.r)
-                .filter(nn => nn.state !== 'inactive' && !(nn.q === hex.q && nn.r === hex.r))
-                .length;
-            return activeNeighborCount >= 2;
-        });
-    };
-
     const applyResearch = (research) => {
         const mappedRadius = Math.max(2, Math.min(5, research.radius || 3));
         currentRadius = mappedRadius;
@@ -146,22 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.isEndpoint = true;
         });
 
-        // Punch a few blank gaps in for higher-complexity research, same as
-        // the real research table does.
-        const complexity = typeof research.complexity === 'number' ? research.complexity : 0;
-        let blanksRemaining = complexity > 1 ? complexity * 2 : 0;
-        let attempts = 0;
-        while (blanksRemaining > 0 && attempts < blanksRemaining * 20) {
-            attempts++;
-            const candidates = grid.getAllHexes().filter(h => h.state === 'active_empty');
-            if (candidates.length === 0) break;
-            const hex = candidates[Math.floor(Math.random() * candidates.length)];
-            if (canRemoveHex(hex)) {
-                grid.setHexState(hex.q, hex.r, 'inactive');
-                blanksRemaining--;
-            }
-        }
-
+        // Deliberately no blank/gap hexes here: the real research table
+        // rolls those randomly per note, which this tool can never predict
+        // or match -- and this feature exists to solve a research, not to
+        // recreate its random layout, so every non-endpoint hex stays open
+        // pathway space for the solver to use.
         gridRenderer.selectedAspectId = null;
         aspectListUI.clearSelection();
         aspectListUI.render(); // also persists enabled aspects + grid size
