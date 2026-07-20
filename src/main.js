@@ -98,6 +98,19 @@ document.addEventListener('DOMContentLoaded', () => {
         thaumicinsurgence: 'Thaumic Insurgence',
     };
 
+    // A hex can be turned into a gap only if doing so wouldn't strand a
+    // neighboring endpoint with fewer than 2 usable neighbors -- mirrors the
+    // safety check the real research table uses when it punches blanks in.
+    const canRemoveHex = (hex) => {
+        return grid.getNeighbors(hex.q, hex.r).every(n => {
+            if (n.state !== 'has_aspect' || !n.isEndpoint) return true;
+            const activeNeighborCount = grid.getNeighbors(n.q, n.r)
+                .filter(nn => nn.state !== 'inactive' && !(nn.q === hex.q && nn.r === hex.r))
+                .length;
+            return activeNeighborCount >= 2;
+        });
+    };
+
     const applyResearch = (research) => {
         const mappedRadius = Math.max(2, Math.min(5, research.radius || 3));
         currentRadius = mappedRadius;
@@ -108,17 +121,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
         research.aspects.forEach(id => db.toggleAspect(id, true));
 
-        const cells = grid.getAllHexes();
-        for (let i = cells.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [cells[i], cells[j]] = [cells[j], cells[i]];
+        // Evenly space the endpoints around the board's outer ring (with a
+        // random rotation offset) instead of scattering them across the
+        // whole disk -- matches how Thaumcraft's own research table lays
+        // out a note, and avoids trivially-adjacent parent/child pairs.
+        let ring = grid.getRing(currentRadius);
+        if (ring.length < research.aspects.length) {
+            ring = grid.getAllHexes().filter(h => h.q !== 0 || h.r !== 0);
         }
+        const ringSize = ring.length;
+        const spacing = ringSize / research.aspects.length;
+        const startOffset = Math.floor(Math.random() * ringSize);
+        const usedRingIndices = new Set();
         research.aspects.forEach((aspectId, idx) => {
-            const cell = cells[idx];
+            let ringIndex = Math.round(startOffset + idx * spacing) % ringSize;
+            while (usedRingIndices.has(ringIndex)) {
+                ringIndex = (ringIndex + 1) % ringSize;
+            }
+            usedRingIndices.add(ringIndex);
+
+            const cell = ring[ringIndex];
             if (!cell) return;
             grid.setHexState(cell.q, cell.r, 'has_aspect', aspectId);
             cell.isEndpoint = true;
         });
+
+        // Punch a few blank gaps in for higher-complexity research, same as
+        // the real research table does.
+        const complexity = typeof research.complexity === 'number' ? research.complexity : 0;
+        let blanksRemaining = complexity > 1 ? complexity * 2 : 0;
+        let attempts = 0;
+        while (blanksRemaining > 0 && attempts < blanksRemaining * 20) {
+            attempts++;
+            const candidates = grid.getAllHexes().filter(h => h.state === 'active_empty');
+            if (candidates.length === 0) break;
+            const hex = candidates[Math.floor(Math.random() * candidates.length)];
+            if (canRemoveHex(hex)) {
+                grid.setHexState(hex.q, hex.r, 'inactive');
+                blanksRemaining--;
+            }
+        }
 
         gridRenderer.selectedAspectId = null;
         aspectListUI.clearSelection();
