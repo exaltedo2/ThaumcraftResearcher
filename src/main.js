@@ -1,4 +1,5 @@
 import { AspectDatabase } from './data/aspects.js';
+import { gtnhResearch } from './data/gtnhResearch.js';
 import { AspectListUI } from './ui/aspectList.js';
 import { HexGrid } from './core/grid.js';
 import { GridRenderer } from './ui/gridRenderer.js';
@@ -83,6 +84,89 @@ document.addEventListener('DOMContentLoaded', () => {
         grid = new HexGrid(currentRadius);
         gridRenderer.grid = grid; // update ref
         gridRenderer.render();
+    });
+
+    // 6b. GTNH Research Picker
+    const modLabels = {
+        thaumcraft: 'Thaumcraft',
+        thaumicbases: 'Thaumic Bases',
+        thaumichorizons: 'Thaumic Horizons',
+        thaumicexploration: 'Thaumic Exploration',
+        thaumicmachina: 'Thaumic Machina',
+        thaumictinkerer: 'Thaumic Tinkerer',
+        thaumicboots: 'Thaumic Boots',
+        thaumicinsurgence: 'Thaumic Insurgence',
+    };
+
+    const applyResearch = (research) => {
+        const mappedRadius = Math.max(2, Math.min(5, research.radius || 3));
+        currentRadius = mappedRadius;
+        gridSizeSelect.value = currentRadius;
+
+        grid = new HexGrid(currentRadius);
+        gridRenderer.grid = grid;
+
+        research.aspects.forEach(id => db.toggleAspect(id, true));
+
+        const cells = grid.getAllHexes();
+        for (let i = cells.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cells[i], cells[j]] = [cells[j], cells[i]];
+        }
+        research.aspects.forEach((aspectId, idx) => {
+            const cell = cells[idx];
+            if (!cell) return;
+            grid.setHexState(cell.q, cell.r, 'has_aspect', aspectId);
+            cell.isEndpoint = true;
+        });
+
+        gridRenderer.selectedAspectId = null;
+        aspectListUI.clearSelection();
+        aspectListUI.render(); // also persists enabled aspects + grid size
+        gridRenderer.render();
+    };
+
+    const researchSearchInput = document.getElementById('research-search');
+    const researchResults = document.getElementById('research-results');
+
+    const renderResearchResults = (query) => {
+        researchResults.innerHTML = '';
+        const q = query.trim().toLowerCase();
+        if (!q) {
+            researchResults.classList.remove('visible');
+            return;
+        }
+
+        const matches = gtnhResearch.filter(r => r.name.toLowerCase().includes(q)).slice(0, 30);
+        if (matches.length === 0) {
+            researchResults.innerHTML = '<div class="research-empty">No matching research found.</div>';
+            researchResults.classList.add('visible');
+            return;
+        }
+
+        matches.forEach(r => {
+            const item = document.createElement('div');
+            item.className = 'research-result-item';
+            item.innerHTML = `
+                <div class="research-result-name">${r.name}</div>
+                <div class="research-result-meta">${modLabels[r.mod] || r.mod} &middot; ${r.aspects.length} aspects</div>
+            `;
+            item.addEventListener('click', () => {
+                applyResearch(r);
+                researchSearchInput.value = r.name;
+                researchResults.classList.remove('visible');
+            });
+            researchResults.appendChild(item);
+        });
+        researchResults.classList.add('visible');
+    };
+
+    researchSearchInput.addEventListener('input', (e) => renderResearchResults(e.target.value));
+    researchSearchInput.addEventListener('focus', (e) => {
+        if (e.target.value) renderResearchResults(e.target.value);
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.research-picker')) researchResults.classList.remove('visible');
     });
 
     // 7. Reset Hexes Button
