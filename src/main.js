@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
             enabledAspects: Array.from(db.enabledAspects),
             useMoreAspects: Array.from(db.useMoreAspects),
             customAspects: Array.from(db.aspects.values()).filter(a => a.isCustom),
-            gridSize: currentRadius
+            gridSize: currentRadius,
+            compactMode: !!db.compactMode
         };
         localStorage.setItem('thaumcraft_researcher_config', JSON.stringify(config));
     };
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 db.useMoreAspects.clear();
                 config.useMoreAspects.forEach(id => db.useMoreAspects.add(id));
             }
+            db.compactMode = !!config.compactMode;
         } catch (e) {
             console.error("Failed to load config", e);
         }
@@ -111,4 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-research').addEventListener('click', runSolver);
     document.getElementById('btn-research-2').addEventListener('click', runSolver);
+
+    // 9. How to Use Collapse Toggle
+    const rightSidebar = document.getElementById('right-sidebar');
+    const btnToggleSidebar = document.getElementById('btn-toggle-sidebar');
+    btnToggleSidebar.addEventListener('click', () => {
+        const collapsed = rightSidebar.classList.toggle('collapsed');
+        btnToggleSidebar.textContent = collapsed ? '▶' : '◀';
+    });
 });

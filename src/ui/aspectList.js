@@ -11,6 +11,7 @@ export class AspectListUI {
         this.setupModToggles();
         this.setupSearch();
         this.setupModal();
+        this.setupCompactToggle();
         this.render();
     }
 
@@ -46,6 +47,17 @@ export class AspectListUI {
             }
             modal.style.display = 'none';
             this.currentEditAspectId = null;
+        });
+    }
+
+    setupCompactToggle() {
+        const compactToggle = document.getElementById('compact-mode');
+        if (!compactToggle) return;
+        compactToggle.checked = !!this.db.compactMode;
+        compactToggle.addEventListener('change', (e) => {
+            this.db.compactMode = e.target.checked;
+            if (window.saveAppConfig) window.saveAppConfig();
+            this.render();
         });
     }
 
@@ -143,6 +155,7 @@ export class AspectListUI {
 
     render() {
         this.checkModStates();
+        this.container.classList.toggle('compact-mode', !!this.db.compactMode);
         this.container.innerHTML = '';
         const aspects = Array.from(this.db.aspects.values()).filter(a => {
             if (!this.searchQuery) return true;

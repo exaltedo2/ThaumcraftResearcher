@@ -38,6 +38,10 @@
           <button id="btn-research" class="primary-btn">Research!</button>
           <button id="btn-reset" class="secondary-btn">Reset Changes</button>
 
+          <div class="setting-group compact-toggle">
+            <label for="compact-mode"><input type="checkbox" id="compact-mode"> Hide Aspect Details</label>
+          </div>
+
           <div class="setting-group">
             <label for="grid-size">Grid Size:</label>
             <select id="grid-size">
@@ -93,20 +97,23 @@
       </main>
 
       <!-- Right Sidebar: How to Use -->
-      <aside class="sidebar right-sidebar">
-        <h2>How to Use</h2>
-        <div class="instructions">
-          <p><strong>1. Place Aspects:</strong> Drag aspects from the library onto empty hexes to set endpoints. <em>Mobile: tap an aspect, then tap a hex.</em></p>
-          <p><strong>2. Add/Remove Gaps:</strong> Right-click an empty hex to toggle it as a void. <em>Mobile: tap an empty hex with nothing selected.</em></p>
-          <p><strong>3. Use More:</strong> Check "Use More" under an aspect to make the algorithm prefer using it.</p>
-          <p><strong>4. Enable/Disable:</strong> Uncheck an aspect to exclude it from the solve.</p>
-          <p><strong>5. Solve:</strong> Click "Research!" to automatically find the shortest parent-child path connecting your placed aspects. Don't like the layout? Click it again for a different valid pattern.</p>
-          <p><strong>6. Edit Formulas:</strong> Click the ⚙️ icon next to a compound aspect to edit its parents.</p>
-          <p><strong>7. Reset Hexes:</strong> Clears all placed aspects and gaps from the grid.</p>
-          <p><strong>8. Reset Changes:</strong> Clears custom aspects, enabled/disabled aspects, and grid size back to defaults.</p>
-        </div>
-        <p class="note"><strong>Note:</strong> With many endpoints, the solver can sometimes route through the same aspect via two separate branches instead of merging them into one shared path -- a known quirk that doesn't affect correctness. This project is open source -- <a href="https://github.com/exaltedo2/ThaumcraftResearcher" target="_blank" rel="noopener noreferrer">check it out on GitHub</a>.</p>
-      </aside>
+      <div class="right-sidebar-wrapper" id="right-sidebar-wrapper">
+        <button id="btn-toggle-sidebar" class="sidebar-toggle-btn" title="Toggle How to Use">◀</button>
+        <aside class="sidebar right-sidebar" id="right-sidebar">
+          <h2>How to Use</h2>
+          <div class="instructions">
+            <p><strong>1. Place Aspects:</strong> Drag aspects from the library onto empty hexes to set endpoints. <em>Mobile: tap an aspect, then tap a hex.</em></p>
+            <p><strong>2. Add/Remove Gaps:</strong> Right-click an empty hex to toggle it as a void. <em>Mobile: tap an empty hex with nothing selected.</em></p>
+            <p><strong>3. Use More:</strong> Check "Use More" under an aspect to make the algorithm prefer using it.</p>
+            <p><strong>4. Enable/Disable:</strong> Uncheck an aspect to exclude it from the solve.</p>
+            <p><strong>5. Solve:</strong> Click "Research!" to automatically find the shortest parent-child path connecting your placed aspects. Don't like the layout? Click it again for a different valid pattern.</p>
+            <p><strong>6. Edit Formulas:</strong> Click the ⚙️ icon next to a compound aspect to edit its parents.</p>
+            <p><strong>7. Reset Hexes:</strong> Clears all placed aspects and gaps from the grid.</p>
+            <p><strong>8. Reset Changes:</strong> Clears custom aspects, enabled/disabled aspects, and grid size back to defaults.</p>
+          </div>
+          <p class="note"><strong>Note:</strong> With many endpoints, the solver can sometimes route through the same aspect via two separate branches instead of merging them into one shared path -- a known quirk that doesn't affect correctness. This project is open source -- <a href="https://github.com/exaltedo2/ThaumcraftResearcher" target="_blank" rel="noopener noreferrer">check it out on GitHub</a>.</p>
+        </aside>
+      </div>
     </div>
     
     <!-- Modal for editing formulas -->
