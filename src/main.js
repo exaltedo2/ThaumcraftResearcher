@@ -121,20 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         research.aspects.forEach(id => db.toggleAspect(id, true));
 
-        // Evenly space the endpoints around the board's outer ring (with a
-        // random rotation offset) instead of scattering them across the
-        // whole disk -- matches how Thaumcraft's own research table lays
-        // out a note, and avoids trivially-adjacent parent/child pairs.
+        // Evenly space the endpoints around the board's outer ring, starting
+        // at ring index 0 -- matches Thaumcraft's own research table, which
+        // (per its actual source, HexUtils.distributeRingRandomly) computes
+        // a random start offset but never applies it, so real notes always
+        // start from the same ring position for a given research.
         let ring = grid.getRing(currentRadius);
         if (ring.length < research.aspects.length) {
             ring = grid.getAllHexes().filter(h => h.q !== 0 || h.r !== 0);
         }
         const ringSize = ring.length;
         const spacing = ringSize / research.aspects.length;
-        const startOffset = Math.floor(Math.random() * ringSize);
         const usedRingIndices = new Set();
         research.aspects.forEach((aspectId, idx) => {
-            let ringIndex = Math.round(startOffset + idx * spacing) % ringSize;
+            let ringIndex = Math.round(idx * spacing) % ringSize;
             while (usedRingIndices.has(ringIndex)) {
                 ringIndex = (ringIndex + 1) % ringSize;
             }
