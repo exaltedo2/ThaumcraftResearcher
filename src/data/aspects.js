@@ -60,24 +60,18 @@ export const standardCompounds = [
 ];
 
 export const modAspects = {
-    gregtech: [
+    gtnh: [
         { id: 'electrum', name: 'Electrum', components: ['potentia', 'machina'], color: '#e6e600' },
         { id: 'magneto', name: 'Magneto', components: ['metallum', 'iter'], color: '#c0c0c0' },
         { id: 'aequalitas', name: 'Aequalitas', components: ['cognitio', 'ordo'], color: '#eef0ea' },
         { id: 'vesania', name: 'Vesania', components: ['cognitio', 'vitium'], color: '#1b122c' },
         { id: 'primordium', name: 'Primordium', components: ['vacuos', 'motus'], color: '#f7f7db' },
         { id: 'astrum', name: 'Astrum', components: ['lux', 'primordium'], color: '#2d2c2b' },
-        { id: 'gloria', name: 'Gloria', components: ['humanus', 'iter'], color: '#ffe980' }
-    ],
-    gt_plus_plus: [
+        { id: 'gloria', name: 'Gloria', components: ['humanus', 'iter'], color: '#ffe980' },
         { id: 'nebrisum', name: 'Nebrisum', components: ['lucrum', 'perfodio'], color: '#d4af37' },
         { id: 'radio', name: 'Radio', components: ['potentia', 'lux'], color: '#40ff40' },
-        { id: 'strontio', name: 'Strontio', components: ['perditio', 'cognitio'], color: '#ff4040' }
-    ],
-    magicbees: [
-        { id: 'tempus', name: 'Tempus', components: ['vacuos', 'ordo'], color: '#d6b885' }
-    ],
-    forbiddenmagic: [
+        { id: 'strontio', name: 'Strontio', components: ['perditio', 'cognitio'], color: '#ff4040' },
+        { id: 'tempus', name: 'Tempus', components: ['vacuos', 'ordo'], color: '#d6b885' },
         { id: 'infernus', name: 'Infernus', components: ['ignis', 'praecantatio'], color: '#ff0000' },
         { id: 'luxuria', name: 'Luxuria', components: ['corpus', 'fames'], color: '#ffc0cb' },
         { id: 'desidia', name: 'Desidia', components: ['vinculum', 'spiritus'], color: '#666666' },

@@ -146,72 +146,11 @@ body {
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.mod-column {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
 .mod-toggles label {
   display: flex;
   align-items: center;
   gap: 5px;
   cursor: pointer;
-}
-
-.research-picker {
-  position: relative;
-}
-
-.research-results {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  max-height: 260px;
-  overflow-y: auto;
-  background: var(--bg-color);
-  border: 1px solid var(--panel-border);
-  border-radius: 6px;
-  margin-top: 4px;
-  display: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-}
-
-.research-results.visible {
-  display: block;
-}
-
-.research-result-item {
-  padding: 0.5rem 0.6rem;
-  cursor: pointer;
-  border-bottom: 1px solid var(--panel-border);
-}
-
-.research-result-item:last-child {
-  border-bottom: none;
-}
-
-.research-result-item:hover {
-  background: rgba(157, 78, 221, 0.15);
-}
-
-.research-result-name {
-  color: var(--text-main);
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-
-.research-result-meta {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-}
-
-.research-empty {
-  padding: 0.5rem 0.6rem;
-  color: var(--text-muted);
-  font-size: 0.8rem;
 }
 
 .compact-toggle label {

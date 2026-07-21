@@ -72,25 +72,9 @@ export class AspectListUI {
     }
 
     setupModToggles() {
-        const gregtech = document.getElementById('mod-gregtech');
-        const gt_plus_plus = document.getElementById('mod-gt_plus_plus');
-        const magicbees = document.getElementById('mod-magicbees');
-        const forbiddenmagic = document.getElementById('mod-forbiddenmagic');
-
-        gregtech.addEventListener('change', (e) => {
-            this.toggleMod('gregtech', e.target.checked);
-        });
-
-        gt_plus_plus.addEventListener('change', (e) => {
-            this.toggleMod('gt_plus_plus', e.target.checked);
-        });
-
-        magicbees.addEventListener('change', (e) => {
-            this.toggleMod('magicbees', e.target.checked);
-        });
-
-        forbiddenmagic.addEventListener('change', (e) => {
-            this.toggleMod('forbiddenmagic', e.target.checked);
+        const gtnh = document.getElementById('mod-gtnh');
+        gtnh.addEventListener('change', (e) => {
+            this.toggleMod('gtnh', e.target.checked);
         });
     }
 
@@ -105,19 +89,16 @@ export class AspectListUI {
     }
 
     checkModStates() {
-        // Sync the mod checkboxes based on the individual aspects
-        const mods = ['gregtech', 'gt_plus_plus', 'magicbees', 'forbiddenmagic'];
-        mods.forEach(modName => {
-            const cb = document.getElementById(`mod-${modName}`);
-            if (!cb) return;
+        // Sync the mod checkbox based on the individual aspects
+        const cb = document.getElementById('mod-gtnh');
+        if (!cb) return;
 
-            const aspects = modAspects[modName];
-            if (!aspects || aspects.length === 0) return;
+        const aspects = modAspects.gtnh;
+        if (!aspects || aspects.length === 0) return;
 
-            // Are ALL aspects of this mod enabled?
-            const allEnabled = aspects.every(a => this.db.enabledAspects.has(a.id));
-            cb.checked = allEnabled;
-        });
+        // Are ALL of these aspects enabled?
+        const allEnabled = aspects.every(a => this.db.enabledAspects.has(a.id));
+        cb.checked = allEnabled;
     }
 
     openEditModal(aspect) {
@@ -166,10 +147,7 @@ export class AspectListUI {
         const categories = {
             'Primals': [],
             'Base Game': [],
-            'gregtech': [],
-            'gt_plus_plus': [],
-            'magicbees': [],
-            'forbiddenmagic': [],
+            'gtnh': [],
             'Custom Aspects': []
         };
 
@@ -348,10 +326,7 @@ export class AspectListUI {
 
         renderGroup('Primals', categories['Primals']);
         renderGroup('Base Game', categories['Base Game']);
-        renderGroup('GregTech', categories['gregtech']);
-        renderGroup('GT++', categories['gt_plus_plus']);
-        renderGroup('MagicBees', categories['magicbees']);
-        renderGroup('Forbidden Magic', categories['forbiddenmagic']);
+        renderGroup('GregTech New Horizons Aspects', categories['gtnh']);
         renderGroup('Custom Aspects', categories['Custom Aspects']);
 
         // Update custom aspect form dropdowns
