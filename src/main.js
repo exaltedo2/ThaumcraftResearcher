@@ -109,6 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
         goodgenerator: 'Good Generator',
         kekztech: 'KekzTech',
         gadomancy: 'Gadomancy',
+        bloodmagic: 'Blood Magic',
+        witchery: 'Witchery',
+        magicbees: 'MagicBees',
+        etfuturumrequiem: 'Et Futurum Requiem',
+        extrautilities: 'Extra Utilities',
     };
 
     const applyResearch = (research) => {
