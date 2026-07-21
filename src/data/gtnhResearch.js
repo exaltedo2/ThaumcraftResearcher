@@ -712,5 +712,13 @@ export const gtnhResearch = [
   {"key":"TERRAFORMFOCUS_RIVER","name":"Terrestrial Focus: River","category":"WITCHGADG","mod":"witchinggadgets","complexity":3,"aspects":["aqua","praecantatio","permutatio","potentia"],"radius":4},
   {"key":"TERRAFORMFOCUS_TAINT","name":"Terrestrial Focus: Tainted Lands","category":"WITCHGADG","mod":"witchinggadgets","complexity":3,"aspects":["vitium","praecantatio","permutatio","potentia"],"radius":4},
   {"key":"VOIDBAG","name":"Voidlinked Bag","category":"WITCHGADG","mod":"witchinggadgets","complexity":4,"aspects":["pannus","vacuos","perditio","alienis"],"radius":4},
-  {"key":"WGBAUBLES","name":"Witching Wearables","category":"WITCHGADG","mod":"witchinggadgets","complexity":4,"aspects":["pannus","praecantatio","tutamen"],"radius":4}
+  {"key":"WGBAUBLES","name":"Witching Wearables","category":"WITCHGADG","mod":"witchinggadgets","complexity":4,"aspects":["pannus","praecantatio","tutamen"],"radius":4},
+  {"key":"ROD_livingwood","name":"Livingwood Wand Core","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":3,"aspects":["arbor","praecantatio","herba"],"radius":4},
+  {"key":"CAP_manasteel","name":"Manasteel Caps","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":2,"aspects":["auram","praecantatio","metallum"],"radius":3},
+  {"key":"ROD_dreamwood_staff","name":"Dreamwood Staff","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":2,"aspects":["arbor","praecantatio","alienis"],"radius":3},
+  {"key":"CAP_elementium","name":"Elementium Caps","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":4,"aspects":["ignis","praecantatio","aqua","aer","terra"],"radius":4},
+  {"key":"CAP_terrasteel","name":"Terrasteel Caps","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":1,"aspects":["potentia","metallum"],"radius":2},
+  {"key":"EUCLIDAISY","name":"Euclidaisy","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":2,"aspects":["herba","praecantatio","auram"],"radius":3},
+  {"key":"WHISPERWEED","name":"Whisperweed","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":1,"aspects":["herba","cognitio","sensus"],"radius":2},
+  {"key":"TAINTHISTLE","name":"Tainthistle","category":"FORBIDDEN","mod":"forbiddenmagic","complexity":2,"aspects":["herba","vitium","praecantatio"],"radius":3}
 ];
