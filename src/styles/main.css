@@ -161,6 +161,12 @@ body {
   position: relative;
 }
 
+.research-picker-note {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 .research-results {
   position: absolute;
   top: 100%;
