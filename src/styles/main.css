@@ -90,6 +90,10 @@ body {
   overflow: hidden;
 }
 
+.right-sidebar.no-transition {
+  transition: none !important;
+}
+
 .instructions {
   display: flex;
   flex-direction: column;

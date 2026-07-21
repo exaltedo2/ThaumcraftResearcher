@@ -119,8 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnToggleSidebar = document.getElementById('btn-toggle-sidebar');
 
     if (localStorage.getItem('thaumcraft_researcher_sidebar_collapsed') === 'true') {
+        // Suppress the transition for this initial, load-time state change --
+        // only user-triggered toggles afterward should animate.
+        rightSidebar.classList.add('no-transition');
         rightSidebar.classList.add('collapsed');
         btnToggleSidebar.textContent = '▶';
+        void rightSidebar.offsetWidth; // force layout so the instant state applies before re-enabling transitions
+        rightSidebar.classList.remove('no-transition');
     }
 
     btnToggleSidebar.addEventListener('click', () => {

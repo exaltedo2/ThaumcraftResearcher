@@ -53,10 +53,6 @@ export const standardCompounds = [
     { id: 'exanimis', name: 'Exanimis', components: ['motus', 'mortuus'], color: '#8a8aa0' },
     { id: 'meto', name: 'Meto', components: ['instrumentum', 'messis'], color: '#d4a017' },
     { id: 'tempestas', name: 'Tempestas', components: ['aer', 'aqua'], color: '#7a8ca8' },
-
-    { id: 'caelum', name: 'Caelum', components: ['vitreus', 'metallum'], color: '#5e74cf' },
-    { id: 'tabernus', name: 'Tabernus', components: ['tutamen', 'iter'], color: '#4c8569' },
-    { id: 'terminus', name: 'Terminus', components: ['lucrum', 'alienis'], color: '#b90000' },
 ];
 
 export const modAspects = {
@@ -78,7 +74,10 @@ export const modAspects = {
         { id: 'superbia', name: 'Superbia', components: ['volatus', 'vacuos'], color: '#9400d3' },
         { id: 'invidia', name: 'Invidia', components: ['sensus', 'fames'], color: '#00ff00' },
         { id: 'ira', name: 'Ira', components: ['telum', 'ignis'], color: '#8b0000' },
-        { id: 'gula', name: 'Gula', components: ['fames', 'vacuos'], color: '#d2691e' }
+        { id: 'gula', name: 'Gula', components: ['fames', 'vacuos'], color: '#d2691e' },
+        { id: 'caelum', name: 'Caelum', components: ['vitreus', 'metallum'], color: '#5e74cf' },
+        { id: 'tabernus', name: 'Tabernus', components: ['tutamen', 'iter'], color: '#4c8569' },
+        { id: 'terminus', name: 'Terminus', components: ['lucrum', 'alienis'], color: '#b90000' }
     ]
 };
 
