@@ -53,12 +53,21 @@ export const standardCompounds = [
     { id: 'exanimis', name: 'Exanimis', components: ['motus', 'mortuus'], color: '#8a8aa0' },
     { id: 'meto', name: 'Meto', components: ['instrumentum', 'messis'], color: '#d4a017' },
     { id: 'tempestas', name: 'Tempestas', components: ['aer', 'aqua'], color: '#7a8ca8' },
+
+    { id: 'caelum', name: 'Caelum', components: ['vitreus', 'metallum'], color: '#5e74cf' },
+    { id: 'tabernus', name: 'Tabernus', components: ['tutamen', 'iter'], color: '#4c8569' },
+    { id: 'terminus', name: 'Terminus', components: ['lucrum', 'alienis'], color: '#b90000' },
 ];
 
 export const modAspects = {
     gregtech: [
         { id: 'electrum', name: 'Electrum', components: ['potentia', 'machina'], color: '#e6e600' },
-        { id: 'magneto', name: 'Magneto', components: ['metallum', 'iter'], color: '#c0c0c0' }
+        { id: 'magneto', name: 'Magneto', components: ['metallum', 'iter'], color: '#c0c0c0' },
+        { id: 'aequalitas', name: 'Aequalitas', components: ['cognitio', 'ordo'], color: '#eef0ea' },
+        { id: 'vesania', name: 'Vesania', components: ['cognitio', 'vitium'], color: '#1b122c' },
+        { id: 'primordium', name: 'Primordium', components: ['vacuos', 'motus'], color: '#f7f7db' },
+        { id: 'astrum', name: 'Astrum', components: ['lux', 'primordium'], color: '#2d2c2b' },
+        { id: 'gloria', name: 'Gloria', components: ['humanus', 'iter'], color: '#ffe980' }
     ],
     gt_plus_plus: [
         { id: 'nebrisum', name: 'Nebrisum', components: ['lucrum', 'perfodio'], color: '#d4af37' },

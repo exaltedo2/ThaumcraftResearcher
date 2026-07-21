@@ -3730,21 +3730,6 @@ export const gtnhResearch = [
     ]
   },
   {
-    "key": "TB_Seasonal_Stabilized",
-    "name": "Stabilized Seasonal Magicks",
-    "category": "unknown",
-    "mod": "thaumicboots",
-    "complexity": 0,
-    "radius": 1,
-    "aspects": [
-      "vinculum",
-      "vitreus",
-      "permutatio",
-      "gelum",
-      "lux"
-    ]
-  },
-  {
     "key": "thaumicenergistics.TEADVINFPROV",
     "name": "Advanced Infusion Provider",
     "category": "thaumicenergistics",
@@ -6025,6 +6010,675 @@ export const gtnhResearch = [
       "fames",
       "telum",
       "praecantatio"
+    ]
+  },
+  {
+    "key": "SHADOWMETAL",
+    "name": "Shadowmetal",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "metallum",
+      "tenebrae",
+      "praecantatio"
+    ]
+  },
+  {
+    "key": "CAP_shadowmetal",
+    "name": "Shadowmetal Wand Caps",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 2,
+    "radius": 3,
+    "aspects": [
+      "metallum",
+      "tenebrae",
+      "alienis",
+      "praecantatio"
+    ]
+  },
+  {
+    "key": "SHADOWCLOTH",
+    "name": "Shadow-Imbued Cloth",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "pannus",
+      "tenebrae"
+    ]
+  },
+  {
+    "key": "ROD_warpwood",
+    "name": "Warpwood Wand Rod",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 3,
+    "radius": 4,
+    "aspects": [
+      "arbor",
+      "tenebrae",
+      "alienis"
+    ]
+  },
+  {
+    "key": "ROD_warpwood_staff",
+    "name": "Warpwood Staff Core",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "arbor",
+      "tenebrae",
+      "alienis"
+    ]
+  },
+  {
+    "key": "EVILSHARDS",
+    "name": "Unbalanced Shards",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vitreus",
+      "tenebrae"
+    ]
+  },
+  {
+    "key": "WARPTREE",
+    "name": "Warpwood Tree",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "alienis",
+      "tenebrae",
+      "vitium",
+      "arbor"
+    ]
+  },
+  {
+    "key": "CRIMSONROBES",
+    "name": "Crimson Seamstry",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "pannus",
+      "permutatio",
+      "tutamen"
+    ]
+  },
+  {
+    "key": "VOIDFORTRESS",
+    "name": "Void Fortress Armor",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tutamen",
+      "alienis",
+      "tenebrae",
+      "vacuos"
+    ]
+  },
+  {
+    "key": "WARPEDGOGGLES",
+    "name": "Warped Goggles Of Revealing",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tutamen",
+      "alienis",
+      "tenebrae"
+    ]
+  },
+  {
+    "key": "TAINTFOCUS",
+    "name": "Wand Focus: Tainted Storm",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vitium",
+      "aqua",
+      "limus",
+      "aer"
+    ]
+  },
+  {
+    "key": "ELDRITCHFOCUS",
+    "name": "Wand Focus: Dark Matter",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "alienis",
+      "perditio",
+      "aer",
+      "tenebrae"
+    ]
+  },
+  {
+    "key": "KNIGHTROBES",
+    "name": "Crimson Forgery",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "pannus",
+      "tenebrae",
+      "tutamen"
+    ]
+  },
+  {
+    "key": "PRAETORARMOR",
+    "name": "Advanced Crimson Forgery",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "pannus",
+      "tenebrae",
+      "tutamen",
+      "alienis"
+    ]
+  },
+  {
+    "key": "VOIDSENTBLOOD",
+    "name": "Voidsent Blood",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vacuos",
+      "tenebrae",
+      "tutamen",
+      "auram"
+    ]
+  },
+  {
+    "key": "VOIDWALKERBOOTS",
+    "name": "Boots of the Voidwalker",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "tenebrae",
+      "tutamen",
+      "alienis"
+    ]
+  },
+  {
+    "key": "CREATIONSHARD",
+    "name": "Shard of Creation",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "ignis",
+      "aqua",
+      "terra",
+      "aer",
+      "ordo",
+      "perditio"
+    ]
+  },
+  {
+    "key": "CREATION",
+    "name": "Creation",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio"
+    ]
+  },
+  {
+    "key": "FOCUSTIME",
+    "name": "Wand Focus: Time",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 3,
+    "radius": 4,
+    "aspects": [
+      "ignis",
+      "aqua",
+      "terra",
+      "aer",
+      "ordo",
+      "perditio",
+      "permutatio"
+    ]
+  },
+  {
+    "key": "FOCUSWEATHER",
+    "name": "Wand Focus: Meteorology",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 3,
+    "radius": 4,
+    "aspects": [
+      "ignis",
+      "aqua",
+      "terra",
+      "aer",
+      "ordo",
+      "perditio",
+      "tempestas"
+    ]
+  },
+  {
+    "key": "THAUMICDISASSEMBLER",
+    "name": "Thaumic Disassembler",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 2,
+    "radius": 3,
+    "aspects": [
+      "metallum",
+      "telum",
+      "instrumentum"
+    ]
+  },
+  {
+    "key": "VOIDSASH",
+    "name": "Voidwalker's Sash of Runic Shielding",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vacuos",
+      "metallum",
+      "tutamen"
+    ]
+  },
+  {
+    "key": "MAGICFUNGUAR",
+    "name": "Magic Funguar",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "fames",
+      "herba"
+    ]
+  },
+  {
+    "key": "CRYSTALDAGGER",
+    "name": "Crystal Blood",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 2,
+    "radius": 3,
+    "aspects": [
+      "telum",
+      "ignis",
+      "sano"
+    ]
+  },
+  {
+    "key": "MACEFOCUS",
+    "name": "Wand Focus: Mage's Mace",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 2,
+    "radius": 3,
+    "aspects": [
+      "perditio",
+      "terra",
+      "telum",
+      "praecantatio"
+    ]
+  },
+  {
+    "key": "CRIMSONBLADE",
+    "name": "Crimson Blade",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 3,
+    "radius": 4,
+    "aspects": [
+      "perditio",
+      "alienis",
+      "telum",
+      "vacuos"
+    ]
+  },
+  {
+    "key": "SHADOWFORTRESSARMOR",
+    "name": "Shadow Fortress Armor",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 3,
+    "radius": 4,
+    "aspects": [
+      "metallum",
+      "tenebrae",
+      "tutamen",
+      "vacuos"
+    ]
+  },
+  {
+    "key": "CAP_cloth",
+    "name": "Cloth Caps",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "pannus"
+    ]
+  },
+  {
+    "key": "CAP_crimsoncloth",
+    "name": "Crimson-Stained Cloth Caps",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "pannus",
+      "sano"
+    ]
+  },
+  {
+    "key": "CAP_shadowcloth",
+    "name": "Shadow-Imbued Cloth Caps",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "pannus",
+      "vacuos",
+      "tenebrae"
+    ]
+  },
+  {
+    "key": "FOCUSTAINTEDBLAST",
+    "name": "Wand Focus: Tainted Shockwave",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "vitium",
+      "aer",
+      "motus"
+    ]
+  },
+  {
+    "key": "PRIMALBLADE",
+    "name": "Edge of the Primordials",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "alienis",
+      "telum",
+      "vacuos",
+      "auram"
+    ]
+  },
+  {
+    "key": "BLOODLUSTUPGRADE",
+    "name": "Tier 5 Upgrade: Bloodlust",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "praecantatio",
+      "sano",
+      "telum"
+    ]
+  },
+  {
+    "key": "THAUMIUMKATANA",
+    "name": "Thaumium Fortress Blade",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "metallum",
+      "praecantatio",
+      "telum"
+    ]
+  },
+  {
+    "key": "VOIDMETALKATANA",
+    "name": "Void Metal Fortress Blade",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "metallum",
+      "praecantatio",
+      "telum",
+      "vacuos"
+    ]
+  },
+  {
+    "key": "SHADOWMETALKATANA",
+    "name": "Shadowmetal Fortress Blade",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "metallum",
+      "praecantatio",
+      "telum",
+      "vacuos",
+      "tenebrae"
+    ]
+  },
+  {
+    "key": "INSCRIPTIONFIRE",
+    "name": "Volcanic Inscription",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "ignis",
+      "lux",
+      "metallum"
+    ]
+  },
+  {
+    "key": "INSCRIPTIONTAINT",
+    "name": "Tainted Inscription",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vitium",
+      "corpus",
+      "metallum"
+    ]
+  },
+  {
+    "key": "INSCRIPTIONUNDEAD",
+    "name": "Undead Inscription",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "sano",
+      "exanimis",
+      "metallum"
+    ]
+  },
+  {
+    "key": "VOIDGOGGLES",
+    "name": "Void Metal Goggles of Revealing",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vacuos",
+      "tenebrae",
+      "praecantatio",
+      "sensus",
+      "vitreus"
+    ]
+  },
+  {
+    "key": "FOCUSSHARD",
+    "name": "Wand Focus: Vis Shard",
+    "category": "TM",
+    "mod": "taintedmagic",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vitreus",
+      "praecantatio",
+      "motus"
+    ]
+  },
+  {
+    "key": "TB_Core_Research",
+    "name": "Thaumaturgic Shoemaking",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "permutatio"
+    ]
+  },
+  {
+    "key": "TB_Seasonal_Boots",
+    "name": "Seasonal Magicks",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "permutatio",
+      "gelum",
+      "praecantatio",
+      "potentia"
+    ]
+  },
+  {
+    "key": "TB_Seasonal_Stabilized",
+    "name": "Stabilized Seasonal Magicks",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "vinculum",
+      "vitreus",
+      "permutatio",
+      "gelum",
+      "lux"
+    ]
+  },
+  {
+    "key": "TB_Unique_Boots",
+    "name": "Unique Magicks",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "permutatio",
+      "instrumentum",
+      "praecantatio",
+      "potentia"
+    ]
+  },
+  {
+    "key": "TB_Explorations_Core",
+    "name": "Celestial Magicks",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "caelum",
+      "permutatio"
+    ]
+  },
+  {
+    "key": "TB_Explorations_Compat",
+    "name": "Combined Celestial Magicks",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "caelum",
+      "permutatio"
+    ]
+  },
+  {
+    "key": "TB_Tainted_Core",
+    "name": "Void Magicks",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "alienis",
+      "permutatio"
+    ]
+  },
+  {
+    "key": "TB_Explorations_Tainted_Compat",
+    "name": "Eldritch Celestial Bodies",
+    "category": "THAUMICBOOTS",
+    "mod": "thaumicboots",
+    "complexity": 0,
+    "radius": 1,
+    "aspects": [
+      "tabernus",
+      "caelum",
+      "alienis",
+      "permutatio"
     ]
   }
 ];
