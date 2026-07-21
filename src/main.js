@@ -1,4 +1,5 @@
 import { AspectDatabase } from './data/aspects.js';
+import { gtnhResearch } from './data/gtnhResearch.js';
 import { AspectListUI } from './ui/aspectList.js';
 import { HexGrid } from './core/grid.js';
 import { GridRenderer } from './ui/gridRenderer.js';
@@ -83,6 +84,110 @@ document.addEventListener('DOMContentLoaded', () => {
         grid = new HexGrid(currentRadius);
         gridRenderer.grid = grid; // update ref
         gridRenderer.render();
+    });
+
+    // 6b. GTNH Research Picker
+    const modLabels = {
+        thaumcraft: 'Thaumcraft',
+        thaumicbases: 'Thaumic Bases',
+        thaumichorizons: 'Thaumic Horizons',
+        thaumicexploration: 'Thaumic Exploration',
+        thaumicmachina: 'Thaumic Machina',
+        thaumictinkerer: 'Thaumic Tinkerer',
+        thaumicboots: 'Thaumic Boots',
+        thaumicinsurgence: 'Thaumic Insurgence',
+        thaumicenergistics: 'Thaumic Energistics',
+        taintedmagic: 'Tainted Magic',
+        gtnh_script: 'GTNH',
+    };
+
+    const applyResearch = (research) => {
+        const mappedRadius = Math.max(2, Math.min(5, research.radius || 3));
+        currentRadius = mappedRadius;
+        gridSizeSelect.value = currentRadius;
+
+        grid = new HexGrid(currentRadius);
+        gridRenderer.grid = grid;
+
+        research.aspects.forEach(id => db.toggleAspect(id, true));
+
+        // Evenly space the endpoints around the board's outer ring, starting
+        // at ring index 0 -- matches Thaumcraft's own research table, which
+        // (per its actual source, HexUtils.distributeRingRandomly) computes
+        // a random start offset but never applies it, so real notes always
+        // start from the same ring position for a given research.
+        let ring = grid.getRing(currentRadius);
+        if (ring.length < research.aspects.length) {
+            ring = grid.getAllHexes().filter(h => h.q !== 0 || h.r !== 0);
+        }
+        const ringSize = ring.length;
+        const spacing = ringSize / research.aspects.length;
+        const usedRingIndices = new Set();
+        research.aspects.forEach((aspectId, idx) => {
+            let ringIndex = Math.round(idx * spacing) % ringSize;
+            while (usedRingIndices.has(ringIndex)) {
+                ringIndex = (ringIndex + 1) % ringSize;
+            }
+            usedRingIndices.add(ringIndex);
+
+            const cell = ring[ringIndex];
+            if (!cell) return;
+            grid.setHexState(cell.q, cell.r, 'has_aspect', aspectId);
+            cell.isEndpoint = true;
+        });
+
+        // Deliberately no blank/gap hexes here: the real research table
+        // rolls those randomly per note, which this tool can never predict
+        // or match -- and this feature exists to solve a research, not to
+        // recreate its random layout, so every non-endpoint hex stays open
+        // pathway space for the solver to use.
+        gridRenderer.selectedAspectId = null;
+        aspectListUI.clearSelection();
+        aspectListUI.render(); // also persists enabled aspects + grid size
+        gridRenderer.render();
+    };
+
+    const researchSearchInput = document.getElementById('research-search');
+    const researchResults = document.getElementById('research-results');
+
+    const renderResearchResults = (query) => {
+        researchResults.innerHTML = '';
+        const q = query.trim().toLowerCase();
+        if (!q) {
+            researchResults.classList.remove('visible');
+            return;
+        }
+
+        const matches = gtnhResearch.filter(r => r.name.toLowerCase().includes(q)).slice(0, 30);
+        if (matches.length === 0) {
+            researchResults.innerHTML = '<div class="research-empty">No matching research found.</div>';
+            researchResults.classList.add('visible');
+            return;
+        }
+
+        matches.forEach(r => {
+            const item = document.createElement('div');
+            item.className = 'research-result-item';
+            item.innerHTML = `
+                <div class="research-result-name">${r.name}</div>
+                <div class="research-result-meta">${modLabels[r.mod] || r.mod} &middot; ${r.aspects.length} aspects</div>
+            `;
+            item.addEventListener('click', () => {
+                applyResearch(r);
+                researchSearchInput.value = r.name;
+                researchResults.classList.remove('visible');
+            });
+            researchResults.appendChild(item);
+        });
+        researchResults.classList.add('visible');
+    };
+
+    researchSearchInput.addEventListener('input', (e) => renderResearchResults(e.target.value));
+    researchSearchInput.addEventListener('focus', (e) => {
+        if (e.target.value) renderResearchResults(e.target.value);
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.research-picker')) researchResults.classList.remove('visible');
     });
 
     // 7. Reset Hexes Button

@@ -9,6 +9,7 @@ A modern, fast, and feature-rich aspect routing solver for the Thaumcraft 4 rese
 - **Modern UI:** Glassmorphism design, spatial overlapping layout, drag-and-drop mechanics, and high-quality aspect graphics.
 - **Preferences:** "Use More" prioritization lets you favor certain aspects to burn through excess research points.
 - **Mobile Friendly:** A responsive layout plus a tap-to-select/tap-to-place flow (tap an empty hex with nothing selected to toggle gaps) for phones and tablets, no dragging required.
+- **GTNH Research Picker:** Search GTNH's actual Thaumcraft research entries (base game + addon mods, including GTNH's own runtime aspect-list overrides) by name and auto-fill the grid size and required aspects for that research.
 
 ## How to Use
 Visit the live site: [Thaumcraft Researcher](https://exaltedo2.github.io/ThaumcraftResearcher/)
@@ -35,6 +36,7 @@ npm run dev
 ## Credits
 - Aspect icons are the property of Azanor (creator of Thaumcraft 4).
 - HQ Aspect image masks are adapted from `universal_tc_research_solver` (MIT License).
+- GTNH research data (research names, required aspects, grid size) was extracted from decompiled Thaumcraft4 and GTNH mod sources, including GTNewHorizonsCoreMod's runtime research-balance overrides.
 
 ## Contact & Feedback
 If you have any suggestions, feature requests, or just want to reach out, feel free to contact me:
