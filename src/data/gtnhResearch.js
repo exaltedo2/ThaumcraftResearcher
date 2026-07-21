@@ -627,7 +627,7 @@ export const gtnhResearch = [
   {"key":"CRIMSON_REALISATION","name":"Realisation","category":"unknown","mod":"thaumicmachina","complexity":2,"radius":3,"aspects":["alienis","cognitio","auram"]},
   {"key":"CRIMSON_THAUMATURGY","name":"Crimsonic Thaumaturgy","category":"unknown","mod":"thaumicmachina","complexity":2,"radius":3,"aspects":["alienis","praecantatio","instrumentum"]},
   {"key":"CRIMSON_WAND_AUGMENTATION","name":"Crimsonic Wand Augments","category":"unknown","mod":"thaumicmachina","complexity":3,"radius":4,"aspects":["alienis","praecantatio","instrumentum","machina","cognitio"]},
-  {"key":"NODAL_STUDIES","name":"Nodal Studies","category":"unknown","mod":"thaumicmachina","complexity":1,"radius":2,"aspects":["potentia","auram","cognitio"]},
+  {"key":"NODAL_STUDIES","name":"Nodal Studies","category":"unknown","mod":"thaumicmachina","complexity":3,"radius":4,"aspects":["alienis","auram","cognitio","praecantatio"]},
   {"key":"VIS_CHARGE","name":"Charge, and How It Functions","category":"unknown","mod":"thaumicmachina","complexity":1,"radius":2,"aspects":["potentia","perditio"]},
   {"key":"VIS_STUDIES","name":"Vis Studies","category":"unknown","mod":"thaumicmachina","complexity":1,"radius":2,"aspects":["potentia","cognitio"]},
   {"key":"WAND_AUGMENTATION","name":"Wand Augmentation Basics","category":"unknown","mod":"thaumicmachina","complexity":3,"radius":4,"aspects":["praecantatio","instrumentum","machina","ordo"]},
