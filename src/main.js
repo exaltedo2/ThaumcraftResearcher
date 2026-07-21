@@ -99,6 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
         thaumicenergistics: 'Thaumic Energistics',
         taintedmagic: 'Tainted Magic',
         gtnh_script: 'GTNH',
+        forbiddenmagic: 'Forbidden Magic',
+        automagy: 'Automagy',
+        witchinggadgets: 'Witching Gadgets',
+        emt: 'EMT',
+        botanichorizons: 'Botanic Horizons',
+        nodalmechanics: 'Nodal Mechanics',
+        warptheory: 'Warp Theory',
+        goodgenerator: 'Good Generator',
+        kekztech: 'KekzTech',
     };
 
     const applyResearch = (research) => {
