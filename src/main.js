@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         warptheory: 'Warp Theory',
         goodgenerator: 'Good Generator',
         kekztech: 'KekzTech',
+        gadomancy: 'Gadomancy',
     };
 
     const applyResearch = (research) => {
