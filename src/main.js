@@ -5,7 +5,7 @@ import { HexGrid } from './core/grid.js';
 import { GridRenderer } from './ui/gridRenderer.js';
 import { CustomAspectUI } from './ui/customAspect.js';
 import { AspectGraph } from './core/graph.js';
-import { Solver } from './core/solver.js';
+import { ExactSolver } from './core/exactSolver.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Database
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gridRenderer.clearPaths();
 
         const graph = new AspectGraph(db);
-        const solver = new Solver(grid, graph);
+        const solver = new ExactSolver(grid, graph);
 
         const paths = solver.solve();
         if (paths && paths.length > 0) {
