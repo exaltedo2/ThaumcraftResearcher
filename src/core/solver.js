@@ -20,8 +20,11 @@ export class Solver {
         this.graph = aspectGraph;
     }
 
-    solve() {
-        const endpoints = this.grid.getEndpoints();
+    // endpointOrder (optional): endpoints in the order to connect them, the first being the
+    // starting point. Defaults to board order. ExactSolver's fallback uses it to restart
+    // the greedy search from different endpoints and keep the cheapest result.
+    solve(endpointOrder = null) {
+        const endpoints = endpointOrder ? [...endpointOrder] : this.grid.getEndpoints();
         if (endpoints.length < 2) return null; // Nothing to connect
 
         // Scratch occupancy map for this solve only ("q,r" -> aspect id),
